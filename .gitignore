@@ -1,0 +1,38 @@
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+public/test.html/
+###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+/bin/.phpunit/
+.phpunit.result.cache
+/phpunit.xml
+.phpunit
+###< symfony/phpunit-bridge ###
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
+
+/.idea/
+docker-compose.env
+/tools/
+.phive
+/cov/
+**/.DS_Store
+docker-compose.override.yml
+/var/public.key
+/var/private.key
