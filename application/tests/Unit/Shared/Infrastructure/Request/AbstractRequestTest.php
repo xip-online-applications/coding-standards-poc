@@ -5,21 +5,18 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Shared\Infrastructure\Request;
 
 use App\Shared\Domain\Exception\ConstraintViolationException;
-use App\Shared\Infrastructure\Request\AbstractRequest;
-use JetBrains\PhpStorm\ArrayShape;
+use App\Shared\Infrastructure\Http\Request\AbstractRequest;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @covers \App\Shared\Infrastructure\Request\AbstractRequest
+ * @covers \App\Shared\Infrastructure\Http\Request\AbstractRequest
  */
 class AbstractRequestTest extends TestCase
 {
@@ -35,6 +32,9 @@ class AbstractRequestTest extends TestCase
         $this->validatorMock = $this->createMock(ValidatorInterface::class);
     }
 
+    /**
+     * @covers \App\Shared\Infrastructure\Http\Request\AbstractRequest::validate
+     */
     public function testValidate(): void
     {
         // Setup
@@ -104,7 +104,7 @@ class AbstractRequestTest extends TestCase
     }
 
     /**
-     * @covers       \App\Shared\Infrastructure\Request\AbstractRequest::resolveStringOrNullValue
+     * @covers \App\Shared\Infrastructure\Http\Request\AbstractRequest::resolveStringOrNullValue
      *
      * @dataProvider stringValueScenarioProvider
      */
@@ -126,7 +126,7 @@ class AbstractRequestTest extends TestCase
     }
 
     /**
-     * @covers       \App\Shared\Infrastructure\Request\AbstractRequest::resolveStringValue
+     * @covers \App\Shared\Infrastructure\Http\Request\AbstractRequest::resolveStringValue
      *
      * @dataProvider stringValueScenarioProvider
      */
@@ -169,7 +169,7 @@ class AbstractRequestTest extends TestCase
     }
 
     /**
-     * @covers       \App\Shared\Infrastructure\Request\AbstractRequest::resolveIntOrNullValue
+     * @covers \App\Shared\Infrastructure\Http\Request\AbstractRequest::resolveIntOrNullValue
      *
      * @dataProvider intValueScenarioProvider
      */
@@ -191,7 +191,7 @@ class AbstractRequestTest extends TestCase
     }
 
     /**
-     * @covers       \App\Shared\Infrastructure\Request\AbstractRequest::resolveIntValue
+     * @covers \App\Shared\Infrastructure\Http\Request\AbstractRequest::resolveIntValue
      *
      * @dataProvider intValueScenarioProvider
      */
@@ -239,7 +239,7 @@ class AbstractRequestTest extends TestCase
     }
 
     /**
-     * @covers       \App\Shared\Infrastructure\Request\AbstractRequest::resolveFloatOrNullValue
+     * @covers \App\Shared\Infrastructure\Http\Request\AbstractRequest::resolveFloatOrNullValue
      *
      * @dataProvider floatValueScenarioProvider
      */
@@ -261,7 +261,7 @@ class AbstractRequestTest extends TestCase
     }
 
     /**
-     * @covers       \App\Shared\Infrastructure\Request\AbstractRequest::resolveFloatValue
+     * @covers \App\Shared\Infrastructure\Http\Request\AbstractRequest::resolveFloatValue
      *
      * @dataProvider floatValueScenarioProvider
      */
@@ -309,7 +309,7 @@ class AbstractRequestTest extends TestCase
     }
 
     /**
-     * @covers       \App\Shared\Infrastructure\Request\AbstractRequest::resolveBooleanOrNullValue
+     * @covers \App\Shared\Infrastructure\Http\Request\AbstractRequest::resolveBooleanOrNullValue
      *
      * @dataProvider booleanValueScenarioProvider
      */
@@ -331,7 +331,7 @@ class AbstractRequestTest extends TestCase
     }
 
     /**
-     * @covers       \App\Shared\Infrastructure\Request\AbstractRequest::resolveBooleanValue
+     * @covers \App\Shared\Infrastructure\Http\Request\AbstractRequest::resolveBooleanValue
      *
      * @dataProvider booleanValueScenarioProvider
      */

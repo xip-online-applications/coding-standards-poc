@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Infrastructure\Request;
+namespace App\Shared\Infrastructure\Http\Request;
 
 use App\Shared\Domain\Exception\ConstraintViolationException;
 use Symfony\Component\HttpFoundation\RequestStack;

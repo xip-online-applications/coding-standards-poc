@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Tests\Data\Factory;
+namespace App\Tests\TestData\Factory;
 
 use App\User\Domain\Model\User;
+use JetBrains\PhpStorm\Pure;
 
 class UserFactory extends AbstractFactory
 {
-    public function create(array $attributes = []): User
+    #[Pure] public function create(array $attributes = []): User
     {
         return new User(
             array_key_exists('id', $attributes) ? $attributes['id'] : $this->generator->uuid,

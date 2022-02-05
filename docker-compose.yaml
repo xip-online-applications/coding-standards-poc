@@ -1,5 +1,16 @@
 version: '3.7'
 services:
+  nginx:
+    build: ./operations/docker/nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./application:/var/www/application:cached
+    links:
+      - php
+    networks:
+      - nginx
+
   php:
     build:
       context: ./operations/docker/php
@@ -18,9 +29,9 @@ services:
       - 'docker.host:127.0.0.1'
     networks:
       - application
-      - apache
+      - nginx
 
 networks:
-  apache: {}
+  nginx: {}
   application:
     driver: bridge
