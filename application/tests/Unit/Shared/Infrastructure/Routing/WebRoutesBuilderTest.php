@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Shared\Infrastructure\Routing;
+namespace XIP\Tests\Unit\Shared\Infrastructure\Routing;
 
-use App\Shared\Domain\Http\Routing\WebRoutesBuilderInterface;
-use App\Shared\Infrastructure\Http\Routing\WebRoutesBuilder;
+use XIP\Shared\Domain\Http\Routing\WebRoutesBuilderInterface;
+use XIP\Shared\Infrastructure\Http\Routing\WebRoutesBuilder;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 /**
- * @covers \App\Shared\Infrastructure\Http\Routing\WebRoutesBuilder
+ * @covers \XIP\Shared\Infrastructure\Http\Routing\WebRoutesBuilder
  */
 class WebRoutesBuilderTest extends TestCase
 {
@@ -28,7 +28,7 @@ class WebRoutesBuilderTest extends TestCase
     }
 
     /**
-     * @covers \App\Shared\Infrastructure\Http\Routing\WebRoutesBuilder::build
+     * @covers \XIP\Shared\Infrastructure\Http\Routing\WebRoutesBuilder::build
      */
     public function testBuild(): void
     {

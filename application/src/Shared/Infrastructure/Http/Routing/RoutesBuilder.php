@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Infrastructure\Http\Routing;
+namespace XIP\Shared\Infrastructure\Http\Routing;
 
-use App\Shared\Domain\Http\Routing\RoutesBuilderInterface;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+use XIP\Shared\Domain\Http\Routing\RoutesBuilderInterface;
 
 class RoutesBuilder implements RoutesBuilderInterface
 {

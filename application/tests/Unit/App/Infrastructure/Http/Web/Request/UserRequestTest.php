@@ -2,11 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\User\Infrastructure\Http\Request;
+namespace App\Tests\Unit\App\Infrastructure\Http\Web\Request;
 
-use App\Shared\Infrastructure\Http\Request\AbstractRequest;
-use App\User\Infrastructure\Http\Request\UserRequest;
-use PHPUnit\Framework\MockObject\MockBuilder;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,15 +11,15 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use XIP\App\Infrastructure\Http\Web\Request\UserRequest;
+use XIP\Shared\Infrastructure\Http\Request\AbstractRequest;
 
 /**
- * @covers \App\User\Infrastructure\Http\Request\UserRequest
+ * @covers \XIP\App\Infrastructure\Http\Web\Request\UserRequest
  */
 class UserRequestTest extends TestCase
 {
     private MockObject|RequestStack $requestStackMock;
-
-    private ValidatorInterface|MockObject $validatorMock;
 
     private UserRequest $userRequest;
 
@@ -31,12 +28,12 @@ class UserRequestTest extends TestCase
         parent::setUp();
 
         $this->requestStackMock = $this->createMock(RequestStack::class);
-        $this->validatorMock = $this->createMock(ValidatorInterface::class);
-        $this->userRequest = new UserRequest($this->requestStackMock, $this->validatorMock);
+        $validatorMock = $this->createMock(ValidatorInterface::class);
+        $this->userRequest = new UserRequest($this->requestStackMock, $validatorMock);
     }
 
     /**
-     * @covers \App\User\Infrastructure\Http\Request\UserRequest
+     * @covers \XIP\App\Infrastructure\Http\Web\Request\UserRequest
      */
     public function testInstance(): void
     {
@@ -44,7 +41,7 @@ class UserRequestTest extends TestCase
     }
 
     /**
-     * @covers \App\User\Infrastructure\Http\Request\UserRequest::constraints
+     * @covers \XIP\App\Infrastructure\Http\Web\Request\UserRequest::constraints
      */
     public function testConstraints(): void
     {
@@ -64,7 +61,7 @@ class UserRequestTest extends TestCase
     }
 
     /**
-     * @covers \App\User\Infrastructure\Http\Request\UserRequest::validationData
+     * @covers \XIP\App\Infrastructure\Http\Web\Request\UserRequest::validationData
      */
     public function testValidationData(): void
     {

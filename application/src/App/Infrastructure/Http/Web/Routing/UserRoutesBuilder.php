@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\User\Infrastructure\Http\Routing;
+namespace XIP\App\Infrastructure\Http\Web\Routing;
 
-use App\Shared\Domain\Http\Routing\WebRoutesBuilderInterface;
-use App\User\Infrastructure\Http\Controller\UserController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+use XIP\App\Infrastructure\Http\Web\Controller\UserController;
+use XIP\Shared\Domain\Http\Routing\WebRoutesBuilderInterface;
 
 class UserRoutesBuilder implements WebRoutesBuilderInterface
 {

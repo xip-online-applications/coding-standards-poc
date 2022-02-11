@@ -2,11 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\User\Infrastructure\Http\Routing;
+namespace App\Tests\Unit\App\Infrastructure\Http\Web\Routing;
 
-use App\Shared\Domain\Http\Routing\WebRoutesBuilderInterface;
-use App\User\Infrastructure\Http\Controller\UserController;
-use App\User\Infrastructure\Http\Routing\UserRoutesBuilder;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,9 +11,12 @@ use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use Symfony\Component\Routing\Loader\PhpFileLoader;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
+use XIP\App\Infrastructure\Http\Web\Controller\UserController;
+use XIP\App\Infrastructure\Http\Web\Routing\UserRoutesBuilder;
+use XIP\Shared\Domain\Http\Routing\WebRoutesBuilderInterface;
 
 /**
- * @covers \App\User\Infrastructure\Http\Routing\UserRoutesBuilder
+ * @covers \XIP\App\Infrastructure\Http\Web\Routing\UserRoutesBuilder
  */
 class UserRoutesBuilderTest extends TestCase
 {
@@ -30,7 +30,7 @@ class UserRoutesBuilderTest extends TestCase
     }
 
     /**
-     * @covers \App\User\Infrastructure\Http\Routing\UserRoutesBuilder
+     * @covers \XIP\App\Infrastructure\Http\Web\Routing\UserRoutesBuilder
      */
     public function testInstanceOf(): void
     {
@@ -39,7 +39,7 @@ class UserRoutesBuilderTest extends TestCase
     }
 
     /**
-     * @covers \App\User\Infrastructure\Http\Routing\UserRoutesBuilder::build
+     * @covers \XIP\App\Infrastructure\Http\Web\Routing\UserRoutesBuilder::build
      */
     public function testBuild(): void
     {

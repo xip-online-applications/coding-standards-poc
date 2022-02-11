@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Tests\TestData\Factory;
+namespace XIP\Tests\TestData\Factory;
 
-use App\User\Domain\Model\User;
+use XIP\User\Domain\Model\User;
 use JetBrains\PhpStorm\Pure;
 
 class UserFactory extends AbstractFactory

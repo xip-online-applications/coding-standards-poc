@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\User\Domain\DataTransferObject;
+namespace XIP\Tests\Unit\User\Domain\DataTransferObject;
 
-use App\User\Domain\DataTransferObject\User;
+use XIP\User\Domain\DataTransferObject\User;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\User\Domain\DataTransferObject\User
+ * @covers \XIP\User\Domain\DataTransferObject\User
  */
 class UserTest extends TestCase
 {

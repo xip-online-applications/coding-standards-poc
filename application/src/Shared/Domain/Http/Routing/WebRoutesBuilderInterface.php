@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Domain\Http\Routing;
+namespace XIP\Shared\Domain\Http\Routing;
 
 interface WebRoutesBuilderInterface extends RoutesBuilderInterface
 {

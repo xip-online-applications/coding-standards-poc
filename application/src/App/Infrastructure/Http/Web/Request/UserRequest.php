@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\User\Infrastructure\Http\Request;
+namespace XIP\App\Infrastructure\Http\Web\Request;
 
-use App\Shared\Infrastructure\Http\Request\AbstractRequest;
 use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\EmailValidator;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use XIP\Shared\Infrastructure\Http\Request\AbstractRequest;
 
 class UserRequest extends AbstractRequest
 {

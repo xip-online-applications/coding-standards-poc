@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\User\Infrastructure\Http\Controller;
+namespace XIP\App\Infrastructure\Http\Web\Controller;
 
-use App\User\Infrastructure\Http\Request\UserRequest;
+use XIP\App\Infrastructure\Http\Web\Request\UserRequest;
+use function dd;
 
 class UserController
 {

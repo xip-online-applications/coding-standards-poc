@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Domain\Exception;
+namespace XIP\Shared\Domain\Exception;
 
 use JetBrains\PhpStorm\Pure;
 use RuntimeException;

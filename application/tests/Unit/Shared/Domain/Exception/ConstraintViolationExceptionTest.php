@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Shared\Domain\Exception;
+namespace XIP\Tests\Unit\Shared\Domain\Exception;
 
-use App\Shared\Domain\Exception\ConstraintViolationException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
+use XIP\Shared\Domain\Exception\ConstraintViolationException;
 
 /**
- * @covers \App\Shared\Domain\Exception\ConstraintViolationException
+ * @covers \XIP\Shared\Domain\Exception\ConstraintViolationException
  */
 class ConstraintViolationExceptionTest extends TestCase
 {
@@ -24,7 +24,7 @@ class ConstraintViolationExceptionTest extends TestCase
     }
 
     /**
-     * @covers \App\Shared\Domain\Exception\ConstraintViolationException::create
+     * @covers \XIP\Shared\Domain\Exception\ConstraintViolationException::create
      */
     public function testCreate(): void
     {
@@ -36,7 +36,7 @@ class ConstraintViolationExceptionTest extends TestCase
     }
 
     /**
-     * @covers \App\Shared\Domain\Exception\ConstraintViolationException::getConstraintViolationList
+     * @covers \XIP\Shared\Domain\Exception\ConstraintViolationException::getConstraintViolationList
      */
     public function testGetConstraintViolationList(): void
     {

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\User\Domain\Model;
+namespace XIP\Tests\Unit\User\Domain\Model;
 
-use App\User\Domain\Model\User;
+use XIP\User\Domain\Model\User;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\User\Domain\Model\User
+ * @covers \XIP\User\Domain\Model\User
  */
 class UserTest extends TestCase
 {

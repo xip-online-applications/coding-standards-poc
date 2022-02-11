@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Infrastructure\Http\Request;
+namespace XIP\Shared\Infrastructure\Http\Request;
 
-use App\Shared\Domain\Exception\ConstraintViolationException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use XIP\Shared\Domain\Exception\ConstraintViolationException;
 
 abstract class AbstractRequest
 {
