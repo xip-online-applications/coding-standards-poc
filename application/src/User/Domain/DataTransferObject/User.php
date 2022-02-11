@@ -10,8 +10,7 @@ final class User
         private readonly string $name,
         private readonly string $email,
         private readonly ?string $password,
-    )
-    {
+    ) {
     }
 
     public function getName(): string

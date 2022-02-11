@@ -15,8 +15,7 @@ abstract class AbstractRequest
     public function __construct(
         protected RequestStack $requestStack,
         private ValidatorInterface $validator,
-    )
-    {
+    ) {
     }
 
     /**

@@ -12,7 +12,8 @@ class RoutesBuilder implements RoutesBuilderInterface
     /** @var RoutesBuilderInterface[] */
     private array $routesBuilders;
 
-    public function __construct(RoutesBuilderInterface ...$routesBuilders) {
+    public function __construct(RoutesBuilderInterface ...$routesBuilders)
+    {
         $this->routesBuilders = $routesBuilders;
     }
 

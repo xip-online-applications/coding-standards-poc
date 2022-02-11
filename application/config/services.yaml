@@ -11,18 +11,18 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-    App\User\Infrastructure\Http\Controller\:
-        resource: '../src/User/Infrastructure/Http/Controller/'
+    XIP\App\Infrastructure\Http\Web\Controller\:
+        resource: '../src/App/Infrastructure/Http/Web/Controller/'
         tags: [ 'controller.service_arguments' ]
 
-    App\:
+    XIP\:
         resource: '../src/'
         exclude:
             - '../src/*/Domain/'
-            - '../src/*/Infrastructure/Http/Controller'
+            - '../src/*/Infrastructure/Http/*/Controller'
             - '../src/Kernel.php'
 
     _instanceof:
-        App\Shared\Infrastructure\Http\Request\AbstractRequest:
+        XIP\Shared\Infrastructure\Http\Request\AbstractRequest:
             calls:
                 - validate: []
