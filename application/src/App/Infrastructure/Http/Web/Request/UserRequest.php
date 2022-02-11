@@ -25,6 +25,6 @@ class UserRequest extends AbstractRequest
 
     public function validationData(): array
     {
-        return $this->requestStack->getCurrentRequest()->query->all();
+        return $this->requestStack->getCurrentRequest()->query?->all() ?? [];
     }
 }

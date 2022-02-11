@@ -61,7 +61,7 @@ class UserRoutesBuilderTest extends TestCase
 
         // Validate
         $this->assertInstanceOf(RouteCollection::class, $routeCollection);
-        $this->assertIsArray($routes = $routeCollection->all());
+        $routes = $routeCollection->all();
         $this->assertCount(1, $routes);
         $this->assertArrayHasKey('users', $routes);
         $this->assertInstanceOf(Route::class, $route = $routes['users']);

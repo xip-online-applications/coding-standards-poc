@@ -11,15 +11,18 @@ use Throwable;
 
 class ConstraintViolationException extends RuntimeException
 {
-    private ConstraintViolationListInterface $constraintViolationList;
+    protected ConstraintViolationListInterface $constraintViolationList;
 
-    #[Pure] public static function create(ConstraintViolationListInterface $constraintViolationList): self
+    private function __construct(ConstraintViolationListInterface $constraintViolationList)
     {
-        $instance = new self();
+        $this->constraintViolationList = $constraintViolationList;
 
-        $instance->constraintViolationList = $constraintViolationList;
+        parent::__construct();
+    }
 
-        return $instance;
+    public static function create(ConstraintViolationListInterface $constraintViolationList): self
+    {
+        return new self($constraintViolationList);
     }
 
     public function getConstraintViolationList(): ConstraintViolationListInterface

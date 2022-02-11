@@ -20,10 +20,13 @@ abstract class AbstractRequest
     }
 
     /**
-     * @return Constraint[]
+     * @return array<string, array<int, Constraint>>
      */
     abstract public function constraints(): array;
 
+    /**
+     * @return array<string, mixed>
+     */
     abstract public function validationData(): array;
 
     public function validate(): void

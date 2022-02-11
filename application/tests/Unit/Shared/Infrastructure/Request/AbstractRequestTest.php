@@ -43,7 +43,7 @@ class AbstractRequestTest extends TestCase
         $this->requestStackMock->expects(self::once())
             ->method('getCurrentRequest')
             ->willReturn($request);
-        $abstractRequest = $this->getAbstractRequest($request);
+        $abstractRequest = $this->getAbstractRequest();
         $constraintViolationListMock = $this->createMock(ConstraintViolationListInterface::class);
         $this->validatorMock->expects(self::once())
             ->method('validate')
@@ -68,7 +68,7 @@ class AbstractRequestTest extends TestCase
         $this->requestStackMock->expects(self::once())
             ->method('getCurrentRequest')
             ->willReturn($request);
-        $abstractRequest = $this->getAbstractRequest($request);
+        $abstractRequest = $this->getAbstractRequest();
         $constraintViolationListMock = $this->createMock(ConstraintViolationListInterface::class);
         $this->validatorMock->expects(self::once())
             ->method('validate')
@@ -116,7 +116,7 @@ class AbstractRequestTest extends TestCase
         $this->requestStackMock->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($request);
-        $abstractRequest = $this->getAbstractRequest($request);
+        $abstractRequest = $this->getAbstractRequest();
 
         // Execute
         $result = $abstractRequest->resolveStringOrNullValue($key ?? 'fake');
@@ -138,7 +138,7 @@ class AbstractRequestTest extends TestCase
         $this->requestStackMock->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($request);
-        $abstractRequest = $this->getAbstractRequest($request);
+        $abstractRequest = $this->getAbstractRequest();
 
         // Execute
         $result = $abstractRequest->resolveStringValue($key ?? 'fake');
@@ -181,7 +181,7 @@ class AbstractRequestTest extends TestCase
         $this->requestStackMock->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($request);
-        $abstractRequest = $this->getAbstractRequest($request);
+        $abstractRequest = $this->getAbstractRequest();
 
         // Execute
         $result = $abstractRequest->resolveIntOrNullValue($key ?? 'fake');
@@ -203,7 +203,7 @@ class AbstractRequestTest extends TestCase
         $this->requestStackMock->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($request);
-        $abstractRequest = $this->getAbstractRequest($request);
+        $abstractRequest = $this->getAbstractRequest();
 
         // Execute
         $result = $abstractRequest->resolveIntValue($key ?? 'fake');
@@ -251,7 +251,7 @@ class AbstractRequestTest extends TestCase
         $this->requestStackMock->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($request);
-        $abstractRequest = $this->getAbstractRequest($request);
+        $abstractRequest = $this->getAbstractRequest();
 
         // Execute
         $result = $abstractRequest->resolveFloatOrNullValue($key ?? 'fake');
@@ -273,7 +273,7 @@ class AbstractRequestTest extends TestCase
         $this->requestStackMock->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($request);
-        $abstractRequest = $this->getAbstractRequest($request);
+        $abstractRequest = $this->getAbstractRequest();
 
         // Execute
         $result = $abstractRequest->resolveFloatValue($key ?? 'fake');
@@ -321,7 +321,7 @@ class AbstractRequestTest extends TestCase
         $this->requestStackMock->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($request);
-        $abstractRequest = $this->getAbstractRequest($request);
+        $abstractRequest = $this->getAbstractRequest();
 
         // Execute
         $result = $abstractRequest->resolveBooleanOrNullValue($key ?? 'fake');
@@ -343,7 +343,7 @@ class AbstractRequestTest extends TestCase
         $this->requestStackMock->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($request);
-        $abstractRequest = $this->getAbstractRequest($request);
+        $abstractRequest = $this->getAbstractRequest();
 
         // Execute
         $result = $abstractRequest->resolveBooleanValue($key ?? 'fake');
@@ -352,7 +352,7 @@ class AbstractRequestTest extends TestCase
         $this->assertSame($expectedValue ?? false, $result);
     }
 
-    private function getAbstractRequest(Request $request): AbstractRequest
+    private function getAbstractRequest(): AbstractRequest
     {
         return new class($this->requestStackMock, $this->validatorMock) extends AbstractRequest {
 
@@ -367,7 +367,7 @@ class AbstractRequestTest extends TestCase
 
             public function validationData(): array
             {
-                return $this->requestStack->getCurrentRequest()->request->all();
+                return $this->requestStack->getCurrentRequest()->request?->all() ?? [];
             }
         };
     }
