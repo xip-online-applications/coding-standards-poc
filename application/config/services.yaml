@@ -10,6 +10,8 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            $databaseDateTimeFormat: 'Y-m-d H:i:s'
 
     XIP\App\Infrastructure\Http\Web\Controller\:
         resource: '../src/App/Infrastructure/Http/Web/Controller/'
@@ -26,3 +28,6 @@ services:
         XIP\Shared\Infrastructure\Http\Request\AbstractRequest:
             calls:
                 - validate: []
+
+    XIP\User\Infrastructure\Repository\UserRepositoryInterface: '@XIP\User\Infrastructure\Repository\Database\UserDatabaseRepository'
+    XIP\User\Infrastructure\Repository\RoleRepositoryInterface: '@XIP\User\Infrastructure\Repository\Database\RoleDatabaseRepository'

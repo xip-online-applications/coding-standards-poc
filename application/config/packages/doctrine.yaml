@@ -1,0 +1,17 @@
+doctrine:
+  dbal:
+    default_connection: mysql
+    connections:
+      mysql:
+        driver: '%env(string:DATABASE_DRIVER)%'
+        server_version: '%env(string:DATABASE_VERSION)%'
+        charset: '%env(string:DATABASE_CHARSET)%'
+        default_table_options:
+          charset: '%env(string:DATABASE_CHARSET)%'
+          collate: '%env(string:DATABASE_COLLATE)%'
+
+        host: '%env(string:DATABASE_HOST)%'
+        port: '%env(int:DATABASE_PORT)%'
+        dbname: '%env(string:DATABASE_NAME)%'
+        user: '%env(string:DATABASE_USERNAME)%'
+        password: '%env(string:DATABASE_PASSWORD)%'

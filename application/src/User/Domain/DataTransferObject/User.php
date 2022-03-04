@@ -10,6 +10,7 @@ final class User
         private readonly string $name,
         private readonly string $email,
         private readonly ?string $password,
+        private readonly array $roleIds,
     ) {
     }
 
@@ -26,5 +27,13 @@ final class User
     public function getPassword(): ?string
     {
         return $this->password;
+    }
+
+    /**
+     * @return array<int, int>
+     */
+    public function getRoleIds(): array
+    {
+        return $this->roleIds;
     }
 }

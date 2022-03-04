@@ -1,0 +1,148 @@
+<?php
+
+declare(strict_types=1);
+
+namespace XIP\User\Infrastructure\Repository\Doctrine\Entity;
+
+use DateTimeInterface;
+use Doctrine\ORM\Mapping;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints;
+
+/**
+ * @Mapping\Entity(repositoryClass="XIP\User\Infrastructure\Repository\Doctrine\Repository\UserRepository")
+ *
+ * @UniqueEntity(fields={"email"})
+ */
+class User
+{
+    /**
+     * @Mapping\Id()
+     * @Mapping\Column(type="integer", nullable=false)
+     * @Mapping\GeneratedValue(strategy="AUTO")
+     */
+    private int $id;
+
+    /**
+     * @Constraints\Column(type="string", nullable=false)
+     */
+    private string $name;
+
+    /**
+     * @Mapping\Column(type="string", unique=true)
+     *
+     * @Constraints\NotBlank()
+     */
+    private string $email;
+
+    /**
+     * @Constraints\Column(type="string", nullable=true)
+     */
+    private ?string $password;
+
+    /**
+     * @Mapping\ManyToMany(targetEntity="Role")
+     * @Mapping\JoinTable(
+     *     name="role_user",
+     *     joinColumns={@Mapping\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@Mapping\JoinColumn(name="role_id", referencedColumnName="id")}
+     *     )
+     * @var array<int, Role>
+     */
+    private array $roles;
+
+    /**
+     * @Mapping\Column(type="datetime")
+     */
+    private DateTimeInterface $createdAt;
+
+    /**
+     * @Mapping\Column(type="datetime")
+     */
+    private DateTimeInterface $updatedAt;
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+        
+        return $this;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+        
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+    
+    public function setPassword(?string $password): self
+    {
+        $this->password = $password;
+        
+        return $this;
+    }
+
+    /**
+     * @return array<int, Role>
+     */
+    public function getRoles(): array
+    {
+        return $this->roles;
+    }
+
+    /**
+     * @param array<int, Role> $roles
+     */
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+        
+        return $this;
+    }
+
+    public function getCreatedAt(): DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(DateTimeInterface $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    public function getUpdatedAt(): DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(DateTimeInterface $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+    }
+}

@@ -9,7 +9,7 @@ RUN rm /etc/apt/preferences.d/no-debian-php && \
 # Install php plugins
 RUN docker-php-ext-configure intl \
 	&& docker-php-ext-install \
-		mbstring pdo pdo_pgsql zip opcache curl intl xml simplexml
+		mbstring pdo pdo_mysql zip opcache curl intl xml simplexml
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

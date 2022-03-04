@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace XIP\Shared\Domain\Exception;
 
-use JetBrains\PhpStorm\Pure;
 use RuntimeException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
-use Throwable;
 
 class ConstraintViolationException extends RuntimeException
 {
-    protected ConstraintViolationListInterface $constraintViolationList;
+    private ConstraintViolationListInterface $constraintViolationList;
 
     private function __construct(ConstraintViolationListInterface $constraintViolationList)
     {

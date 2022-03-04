@@ -5,11 +5,21 @@ declare(strict_types=1);
 namespace XIP\App\Infrastructure\Http\Web\Controller;
 
 use XIP\App\Infrastructure\Http\Web\Request\UserRequest;
+use XIP\User\Infrastructure\Repository\UserRepositoryInterface;
 
 class UserController
 {
-    public function index(UserRequest $request): void
+    private UserRepositoryInterface $userRepository;
+
+    public function __construct(UserRepositoryInterface $userRepository)
     {
-        dd($request);
+        $this->userRepository = $userRepository;
+    }
+    
+    public function index(): void
+    {
+        dd(
+            $this->userRepository->findAll()
+        );
     }
 }
