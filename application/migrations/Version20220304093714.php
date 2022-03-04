@@ -21,7 +21,7 @@ final class Version20220304093714 extends AbstractMigration
     {
         $table = $schema->createTable(RoleUserPivot::NAME);
 
-        $table->addColumn(RoleUserPivot::COLUMN_ROLE_ID, 'integer', ['autoincrement' => true]);
+        $table->addColumn(RoleUserPivot::COLUMN_ROLE_ID, 'integer', ['notnull' => true]);
         $table->addForeignKeyConstraint(RoleTable::NAME, [RoleUserPivot::COLUMN_ROLE_ID], [RoleTable::COLUMN_ID], ['onDelete' => 'cascade']);
 
         $table->addColumn(RoleUserPivot::COLUMN_USER_ID, 'integer', ['notnull' => true]);

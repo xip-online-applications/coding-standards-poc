@@ -15,3 +15,13 @@ doctrine:
         dbname: '%env(string:DATABASE_NAME)%'
         user: '%env(string:DATABASE_USERNAME)%'
         password: '%env(string:DATABASE_PASSWORD)%'
+
+  orm:
+    auto_mapping: true
+    mappings:
+      UserEntity:
+        type: annotation
+        dir: '%kernel.project_dir%/src/User/Infrastructure/Repository/Doctrine/Entity'
+        is_bundle: false
+        prefix: XIP\User\Infrastructure\Repository\Doctrine\Entity
+        alias: App

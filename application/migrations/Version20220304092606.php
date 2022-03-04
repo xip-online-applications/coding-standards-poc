@@ -6,6 +6,7 @@ namespace Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
+use XIP\User\Domain\Model\Role;
 use XIP\User\Infrastructure\Repository\Database\RoleTable;
 
 final class Version20220304092606 extends AbstractMigration

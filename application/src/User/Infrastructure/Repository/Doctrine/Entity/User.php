@@ -11,8 +11,6 @@ use Symfony\Component\Validator\Constraints;
 
 /**
  * @Mapping\Entity(repositoryClass="XIP\User\Infrastructure\Repository\Doctrine\Repository\UserRepository")
- *
- * @UniqueEntity(fields={"email"})
  */
 class User
 {
@@ -24,7 +22,7 @@ class User
     private int $id;
 
     /**
-     * @Constraints\Column(type="string", nullable=false)
+     * @Mapping\Column(type="string", nullable=false)
      */
     private string $name;
 
@@ -36,28 +34,23 @@ class User
     private string $email;
 
     /**
-     * @Constraints\Column(type="string", nullable=true)
+     * @Mapping\Column(type="string", nullable=true)
      */
     private ?string $password;
 
     /**
-     * @Mapping\ManyToMany(targetEntity="Role")
-     * @Mapping\JoinTable(
-     *     name="role_user",
-     *     joinColumns={@Mapping\JoinColumn(name="user_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@Mapping\JoinColumn(name="role_id", referencedColumnName="id")}
-     *     )
+     * @Mapping\ManyToMany(targetEntity="Role", mappedBy="role")
      * @var array<int, Role>
      */
     private array $roles;
 
     /**
-     * @Mapping\Column(type="datetime")
+     * @Mapping\Column(name="created_at", type="datetime")
      */
     private DateTimeInterface $createdAt;
 
     /**
-     * @Mapping\Column(type="datetime")
+     * @Mapping\Column(name="updated_at", type="datetime")
      */
     private DateTimeInterface $updatedAt;
 

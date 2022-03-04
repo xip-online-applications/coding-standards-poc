@@ -26,8 +26,8 @@ class RoleDoctrineRepository implements RoleRepositoryInterface
     {
         $roles = $this->roleRepository->createQueryBuilder('role')
             ->indexBy('role', 'id')
-            ->where('role.id = :suerId')
-            ->setParameter('id', $ids)
+            ->where('role.id in :ids')
+            ->setParameter('ids', $ids)
             ->getQuery()
             ->execute();
 

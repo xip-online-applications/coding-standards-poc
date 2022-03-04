@@ -7,11 +7,10 @@ namespace XIP\User\Infrastructure\Repository\Doctrine\Entity;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints;
 
 /**
  * @Mapping\Entity(repositoryClass="XIP\User\Infrastructure\Repository\Doctrine\Repository\UserRepository")
- *
- * @UniqueEntity(fields={"name"})
  */
 class Role
 {
@@ -30,25 +29,10 @@ class Role
     protected string $name;
 
     /**
-     * @Mapping\ManyToMany(targetEntity="User")
-     * @Mapping\JoinTable(
-     *     name="role_user",
-     *     joinColumns={@Mapping\JoinColumn(name="role_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@Mapping\JoinColumn(name="user_id", referencedColumnName="id")}
-     *     )
+     * @Mapping\ManyToMany(targetEntity="User", inversedBy="users")
      * @var array<int, User>
      */
     protected array $users;
-
-    /**
-     * @Mapping\Column(type="datetime")
-     */
-    protected DateTimeInterface $createdAt;
-
-    /**
-     * @Mapping\Column(type="datetime")
-     */
-    protected DateTimeInterface $updatedAt;
 
     public function getId(): int
     {
@@ -84,25 +68,5 @@ class Role
     public function setUsers(array $users): void
     {
         $this->users = $users;
-    }
-
-    public function getCreatedAt(): DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(DateTimeInterface $createdAt): void
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    public function getUpdatedAt(): DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(DateTimeInterface $updatedAt): void
-    {
-        $this->updatedAt = $updatedAt;
     }
 }
