@@ -32,7 +32,7 @@ class RoleDatabaseRepository extends AbstractDatabaseRepository implements RoleR
     {
         $roleInfos = $this->createSelect()
             ->innerJoin(
-                UserTable::NAME,
+                RoleTable::NAME,
                 RoleUserPivot::NAME,
                 RoleUserPivot::NAME,
                 $this->onUserIdEqualsRoleUserUserId()
@@ -73,7 +73,7 @@ class RoleDatabaseRepository extends AbstractDatabaseRepository implements RoleR
 
     private function onUserIdEqualsRoleUserUserId(): string
     {
-        return sprintf('%s.%s = %s.%s', UserTable::NAME, UserTable::COLUMN_ID, RoleUserPivot::NAME, RoleUserPivot::COLUMN_ROLE_ID);
+        return sprintf('%s.%s = %s.%s', RoleTable::NAME, RoleTable::COLUMN_ID, RoleUserPivot::NAME, RoleUserPivot::COLUMN_ROLE_ID);
     }
 
     /**
@@ -93,9 +93,8 @@ class RoleDatabaseRepository extends AbstractDatabaseRepository implements RoleR
      */
     private function hydrateAll(array $roleInfos): array
     {
-        return $this->keyBy(
-            RoleTable::COLUMN_ID,
-            array_map([$this, 'hydrate'], $roleInfos)
-        );
+        $roleInfos = $this->keyBy(RoleTable::COLUMN_ID, $roleInfos);
+        
+        return array_map([$this, 'hydrate'], $roleInfos);
     }
 }

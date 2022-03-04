@@ -24,4 +24,4 @@ doctrine:
         dir: '%kernel.project_dir%/src/User/Infrastructure/Repository/Doctrine/Entity'
         is_bundle: false
         prefix: XIP\User\Infrastructure\Repository\Doctrine\Entity
-        alias: App
+        alias: XIP

@@ -60,8 +60,8 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
             ->where($this->whereIdEquals())
             ->setParameter('id', $id)
             ->executeQuery()
-            ->fetchOne();
-
+            ->fetchAssociative();
+        
         if (false === $userInfo) {
             return null;
         }
@@ -88,7 +88,7 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
             ->where($this->whereEmailEquals())
             ->setParameter('email', $email)
             ->executeQuery()
-            ->fetchOne();
+            ->fetchAssociative();
 
         if (false === $userInfo) {
             return null;
@@ -275,9 +275,8 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
      */
     private function hydrateAll(array $userInfos): array
     {
-        return $this->keyBy(
-            UserTable::COLUMN_ID,
-            array_map([$this, 'hydrate'], $userInfos)
-        );
+        $userInfos = $this->keyBy('id', $userInfos);
+        
+        return array_map([$this, 'hydrate'], $userInfos);
     }
 }

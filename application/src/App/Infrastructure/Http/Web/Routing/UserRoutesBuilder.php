@@ -16,5 +16,13 @@ class UserRoutesBuilder implements WebRoutesBuilderInterface
         $routes->add('users', '/users')
             ->controller([UserController::class, 'index'])
             ->methods([Request::METHOD_GET]);
+
+        $routes->add('users.show', '/users/{userId}')
+            ->controller([UserController::class, 'show'])
+            ->methods([Request::METHOD_GET]);
+
+        $routes->add('users.mail', '/users/{mail}/mail')
+            ->controller([UserController::class, 'mail'])
+            ->methods([Request::METHOD_GET]);
     }
 }

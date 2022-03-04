@@ -24,11 +24,12 @@ abstract class AbstractDatabaseRepository
 
     protected function keyBy(string $keyField, array $array): array
     {
-        $keys = array_map(
-            static fn(array $value): mixed => $value[$keyField],
-            $array
-        );
+        $result = [];
+        
+        foreach ($array as $value) {
+            $result[$value[$keyField]] = $value;
+        }
 
-        return array_fill_keys($keys, $array);
+        return $result;
     }
 }
