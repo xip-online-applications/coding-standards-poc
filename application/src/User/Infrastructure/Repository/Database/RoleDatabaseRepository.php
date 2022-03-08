@@ -14,20 +14,6 @@ class RoleDatabaseRepository extends AbstractDatabaseRepository implements RoleR
     /**
      * {@inheritDoc}
      */
-    public function findByIds(array $ids): array
-    {
-        $roleInfos = $this->createSelect()
-            ->where($this->whereIdInIds())
-            ->setParameter('ids', implode(', ', $ids))
-            ->executeQuery()
-            ->fetchAllAssociative();
-
-        return $this->hydrateAll($roleInfos);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
     public function findByUserId(int $userId): array
     {
         $roleInfos = $this->createSelect()

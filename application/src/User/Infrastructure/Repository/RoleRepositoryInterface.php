@@ -9,12 +9,6 @@ use XIP\User\Domain\Model\Role;
 interface RoleRepositoryInterface
 {
     /**
-     * @param array<int, int> $ids
-     * @return array<int, Role>
-     */
-    public function findByIds(array $ids): array;
-
-    /**
      * @return array<int, Role>
      */
     public function findByUserId(int $userId): array;

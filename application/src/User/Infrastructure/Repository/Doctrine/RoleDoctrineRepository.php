@@ -17,22 +17,7 @@ class RoleDoctrineRepository implements RoleRepositoryInterface
     {
         $this->roleRepository = $roleRepository;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function findByIds(array $ids): array
-    {
-        $roles = $this->roleRepository->createQueryBuilder('role')
-            ->indexBy('role', 'role.id')
-            ->where('role.id in (:ids)')
-            ->setParameter('ids', $ids)
-            ->getQuery()
-            ->execute();
-
-        return $this->hydrateAll($roles);
-    }
-
+    
     /**
      * {@inheritDoc}
      */
