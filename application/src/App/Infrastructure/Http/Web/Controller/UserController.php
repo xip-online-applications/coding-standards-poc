@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace XIP\App\Infrastructure\Http\Web\Controller;
 
+use XIP\App\Infrastructure\Http\Web\Request\UserRequest;
+use XIP\User\Domain\DataTransferObject\User as UserDto;
 use XIP\User\Infrastructure\Repository\UserRepositoryInterface;
 
 class UserController
@@ -33,6 +35,30 @@ class UserController
     {
         dd(
             $this->userRepository->findOrFailByEmail($mail)
+        );
+    }
+    
+    public function exists(string $mail): void
+    {
+        dd(
+            $this->userRepository->exists($mail)
+        );
+    }
+    
+    public function store(UserRequest $userRequest): void
+    {
+        dd(
+            $this->userRepository->store(
+                new UserDto(
+                    $userRequest->resolveStringValue(UserRequest::KEY_NAME),
+                    $userRequest->resolveStringValue(UserRequest::KEY_EMAIL),
+                    null,
+                    array_map(
+                        static fn(string $number): int => (int)$number,
+                        $userRequest->resolveArrayValue(UserRequest::KEY_ROLES)
+                    )
+                )
+            )
         );
     }
 }

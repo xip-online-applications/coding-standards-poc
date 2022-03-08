@@ -104,6 +104,28 @@ abstract class AbstractRequest
         return (bool)$this->resolveBooleanOrNullValue($key);
     }
 
+    public function resolveArrayOrNullValue(string $key): ?array
+    {
+        $value = $this->resolveValue($key);
+
+        if (null === $value) {
+            return null;
+        }
+
+        return (array)$value;
+    }
+    
+    public function resolveArrayValue(string $key): array
+    {
+        $value = $this->resolveArrayOrNullValue($key);
+        
+        if (null === $value) {
+            return [];
+        }
+        
+        return $value;
+    }
+
     private function constraintsCollection(): Collection
     {
         return new Collection($this->constraints());
@@ -119,4 +141,5 @@ abstract class AbstractRequest
 
         return $data[$key];
     }
+    
 }

@@ -25,14 +25,24 @@ class UserDoctrineRepository implements UserRepositoryInterface
 
     public function findAll(): array
     {
-        $userEntities = $this->userRepository->findAll();
+        $userEntities = $this->userRepository->createQueryBuilder('user')
+            ->indexBy('user', 'user.id')
+            ->getQuery()
+            ->execute();
 
         return $this->hydrateAll($userEntities);
     }
 
     public function findByIds(array $ids): array
     {
-        // TODO: Implement findByIds() method.
+        $userEntities = $this->userRepository->createQueryBuilder('user')
+            ->indexBy('user', 'user.id')
+            ->where('user.id in :ids')
+            ->setParameter('ids', $ids)
+            ->getQuery()
+            ->execute();
+
+        return $this->hydrateAll($userEntities);
     }
 
     public function findById(int $id): ?User
@@ -99,15 +109,20 @@ class UserDoctrineRepository implements UserRepositoryInterface
 
     public function store(UserDto $userDto): User
     {
-        $user = new UserEntity;
-        $user->setName($userDto->getName());
-        $user->setEmail($userDto->getEmail());
-        $user->setPassword(null);
+        $userEntity = new UserEntity();
+
+        $this->flushEntity($userDto, $userEntity);
+
+        return $this->findOrFailById($userEntity->getId());
     }
 
     public function update(UserDto $userDto, User $user): User
     {
-        // TODO: Implement update() method.
+        $userEntity = $this->userRepository->findOneBy(['id' => $user->getId()]);
+        
+        $this->flushEntity($userDto, $userEntity);
+        
+        return $this->findOrFailById($user->getId());
     }
 
     public function delete(User $user): void
@@ -118,6 +133,20 @@ class UserDoctrineRepository implements UserRepositoryInterface
             ->setParameter('id', $user->getId())
             ->getQuery()
             ->execute();
+    }
+    
+    private function flushEntity(UserDto $userDto, UserEntity $userEntity): void
+    {
+        $userEntity->setName($userDto->getName());
+        $userEntity->setEmail($userDto->getEmail());
+        $userEntity->setPassword($userDto->getPassword());
+        $userEntity->setRoles(
+            $this->roleRepository->findByIds($userDto->getRoleIds())
+        );
+
+        $entityManager = $this->userRepository->createQueryBuilder('user')->getEntityManager();
+        $entityManager->persist($userEntity);
+        $entityManager->flush();
     }
 
     private function hydrate(UserEntity $userEntity): User

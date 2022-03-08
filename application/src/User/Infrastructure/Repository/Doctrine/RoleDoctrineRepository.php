@@ -25,8 +25,8 @@ class RoleDoctrineRepository implements RoleRepositoryInterface
     public function findByIds(array $ids): array
     {
         $roles = $this->roleRepository->createQueryBuilder('role')
-            ->indexBy('role', 'id')
-            ->where('role.id in :ids')
+            ->indexBy('role', 'role.id')
+            ->where('role.id in (:ids)')
             ->setParameter('ids', $ids)
             ->getQuery()
             ->execute();
@@ -40,9 +40,9 @@ class RoleDoctrineRepository implements RoleRepositoryInterface
     public function findByUserId(int $userId): array
     {
         $roles = $this->roleRepository->createQueryBuilder('role')
-            ->indexBy('role', 'id')
-            ->innerJoin(UserEntity::class,  'user')
-            ->where('user.id = :suerId')
+            ->indexBy('role', 'role.id')
+            ->innerJoin('role.users',  'user')
+            ->where('user.id = :userId')
             ->setParameter('userId', $userId)
             ->getQuery()
             ->execute();
@@ -54,11 +54,11 @@ class RoleDoctrineRepository implements RoleRepositoryInterface
     {
         $count = $this->roleRepository->createQueryBuilder('role')
             ->select('count(role.id)')
-            ->where('role.id IN :ids')
+            ->where('role.id in (:ids)')
             ->setParameter('ids', $ids)
             ->getQuery()
-            ->execute();
-
+            ->getSingleScalarResult();   
+        
         return $count === count($ids);
     }
 

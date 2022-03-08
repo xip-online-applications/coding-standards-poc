@@ -18,7 +18,7 @@ class RoleDatabaseRepository extends AbstractDatabaseRepository implements RoleR
     {
         $roleInfos = $this->createSelect()
             ->where($this->whereIdInIds())
-            ->setParameter('ids', $ids)
+            ->setParameter('ids', implode(', ', $ids))
             ->executeQuery()
             ->fetchAllAssociative();
 
@@ -49,10 +49,10 @@ class RoleDatabaseRepository extends AbstractDatabaseRepository implements RoleR
     {
         $count = $this->createSelect([sprintf('count(%s.%s)', RoleTable::NAME, RoleTable::COLUMN_ID)])
             ->where($this->whereIdInIds())
-            ->setParameter('ids', $ids)
+            ->setParameter('ids', implode(', ', $ids))
             ->executeQuery()
-            ->fetchNumeric();
-
+            ->fetchOne();
+        
         return count($ids) === $count;
     }
 
@@ -68,7 +68,7 @@ class RoleDatabaseRepository extends AbstractDatabaseRepository implements RoleR
 
     private function whereIdInIds(): string
     {
-        return sprintf('%s.%s IN (:ids)', RoleTable::NAME, RoleTable::COLUMN_ID);
+        return sprintf('%s.%s in (:ids)', RoleTable::NAME, RoleTable::COLUMN_ID);
     }
 
     private function onUserIdEqualsRoleUserUserId(): string

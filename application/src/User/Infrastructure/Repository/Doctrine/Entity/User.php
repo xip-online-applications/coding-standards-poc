@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace XIP\User\Infrastructure\Repository\Doctrine\Entity;
 
 use DateTimeInterface;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints;
 
 /**
@@ -40,9 +40,9 @@ class User
 
     /**
      * @Mapping\ManyToMany(targetEntity="Role", mappedBy="role")
-     * @var array<int, Role>
+     * @var Collection<int, Role>
      */
-    private array $roles;
+    private Collection $roles;
 
     /**
      * @Mapping\Column(name="created_at", type="datetime")
@@ -59,13 +59,6 @@ class User
         return $this->id;
     }
 
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-        
-        return $this;
-    }
-
     public function getName(): string
     {
         return $this->name;
@@ -75,7 +68,6 @@ class User
     {
         $this->name = $name;
     }
-
 
     public function getEmail(): string
     {
@@ -110,9 +102,9 @@ class User
     }
 
     /**
-     * @param array<int, Role> $roles
+     * @param Collection<int, Role> $roles
      */
-    public function setRoles(array $roles): self
+    public function setRoles(Collection $roles): self
     {
         $this->roles = $roles;
         

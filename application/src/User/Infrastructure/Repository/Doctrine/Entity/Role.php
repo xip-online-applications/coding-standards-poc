@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace XIP\User\Infrastructure\Repository\Doctrine\Entity;
 
-use DateTimeInterface;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints;
 
 /**
@@ -30,9 +29,9 @@ class Role
 
     /**
      * @Mapping\ManyToMany(targetEntity="User", inversedBy="users")
-     * @var array<int, User>
+     * @var Collection<int, User>
      */
-    protected array $users;
+    protected Collection $users;
 
     public function getId(): int
     {

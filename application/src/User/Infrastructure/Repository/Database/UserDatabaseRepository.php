@@ -116,7 +116,7 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
             ->where($this->whereEmailEquals())
             ->setParameter('email', $email)
             ->executeQuery()
-            ->fetchNumeric();
+            ->fetchOne();
 
         return 1 === $count;
     }
@@ -133,12 +133,17 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
         $this->createQueryBuilder()
             ->insert(UserTable::NAME)
             ->values([
-                UserTable::COLUMN_NAME => $userDto->getName(),
-                UserTable::COLUMN_EMAIL => $userDto->getEmail(),
-                UserTable::COLUMN_PASSWORD => $userDto->getPassword(),
-                UserTable::COLUMN_CREATED_AT => $now->format($this->databaseDateTimeFormat),
-                UserTable::COLUMN_UPDATED_AT => $now->format($this->databaseDateTimeFormat),
+                UserTable::COLUMN_NAME => ':name',
+                UserTable::COLUMN_EMAIL => ':email',
+                UserTable::COLUMN_PASSWORD => ':password',
+                UserTable::COLUMN_CREATED_AT => ':createdAt',
+                UserTable::COLUMN_UPDATED_AT => ':updatedAt',
             ])
+            ->setParameter('name', $userDto->getName())
+            ->setParameter('email', $userDto->getEmail())
+            ->setParameter('password', $userDto->getPassword())
+            ->setParameter('createdAt', $now->format($this->databaseDateTimeFormat))
+            ->setParameter('updatedAt', $now->format($this->databaseDateTimeFormat))
             ->executeQuery();
 
         $user = $this->findOrFailById(
@@ -157,11 +162,15 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
             ->where($this->whereIdEquals())
             ->setParameter('id', $user->getId())
             ->values([
-                UserTable::COLUMN_NAME => $userDto->getName(),
-                UserTable::COLUMN_EMAIL => $userDto->getEmail(),
-                UserTable::COLUMN_PASSWORD => $userDto->getPassword(),
-                UserTable::COLUMN_UPDATED_AT => (new \DateTimeImmutable())->format($this->databaseDateTimeFormat),
+                UserTable::COLUMN_NAME => ':name',
+                UserTable::COLUMN_EMAIL => ':email',
+                UserTable::COLUMN_PASSWORD => ':password',
+                UserTable::COLUMN_UPDATED_AT => ':updatedAt',
             ])
+            ->setParameter('name', $userDto->getName())
+            ->setParameter('email', $userDto->getEmail())
+            ->setParameter('password', $userDto->getPassword())
+            ->setParameter('updatedAt', (new \DateTimeImmutable())->format($this->databaseDateTimeFormat))
             ->executeQuery();
 
         $this->syncRoles($user, $userDto);
@@ -208,9 +217,9 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
         );
 
         $newRoles = array_diff($userDTO->getRoleIds(), $currentRoleIds);
-
+        
         foreach ($newRoles as $roleId) {
-            $this->insertRoleForUser($user->getId(), $roleId);
+            $this->insertRoleForUser($roleId, $user->getId());
         }
 
         $deletableRoleIds = array_diff($currentRoleIds, $userDTO->getRoleIds());
@@ -227,9 +236,11 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
         $this->createQueryBuilder()
             ->insert(RoleUserPivot::NAME)
             ->values([
-                RoleUserPivot::COLUMN_ROLE_ID => $roleId,
-                RoleUserPivot::COLUMN_USER_ID => $userId
+                RoleUserPivot::COLUMN_ROLE_ID => ':roleId',
+                RoleUserPivot::COLUMN_USER_ID => ':userId',
             ])
+            ->setParameter('roleId', $roleId)
+            ->setParameter('userId', $userId)
             ->executeQuery();
     }
 
