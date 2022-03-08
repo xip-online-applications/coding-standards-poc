@@ -71,7 +71,7 @@ class UserController
                 new UserDto(
                     $userRequest->resolveStringValue(UserRequest::KEY_NAME),
                     $userRequest->resolveStringValue(UserRequest::KEY_EMAIL),
-                    null,
+                    $userRequest->resolveStringValue(UserRequest::KEY_PASSWORD),
                     array_map(
                         static fn(string $number): int => (int)$number,
                         $userRequest->resolveArrayValue(UserRequest::KEY_ROLES)

@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace XIP\App\Infrastructure\Http\Web\Request;
 
-use Symfony\Component\Validator\Constraints\All;
-use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Type;
@@ -19,6 +18,7 @@ class UserRequest extends AbstractRequest
 {
     public const KEY_NAME = 'name';
     public const KEY_EMAIL = 'email';
+    public const KEY_PASSWORD = 'password';
     public const KEY_ROLES = 'roles';
 
     /**
@@ -26,7 +26,7 @@ class UserRequest extends AbstractRequest
      */
     public function constraints(): array
     {
-        return [
+        $constraints = [
             self::KEY_NAME => [
                 new Required([
                     new NotBlank(),
@@ -47,6 +47,17 @@ class UserRequest extends AbstractRequest
                 ])
             ],
         ];
+        
+        if (null !== $this->requestStack->getCurrentRequest()->attributes->get('userId')) {
+            $constraints[self::KEY_PASSWORD] = [
+                new Required([
+                    new Type('string'),
+                    new Length(['min' => 8]),
+                ])    
+            ];
+        }
+        
+        return $constraints;
     }
 
     public function validationData(): array
