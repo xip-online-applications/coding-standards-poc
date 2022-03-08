@@ -19,21 +19,17 @@ class Role
      * @Mapping\Column(type="integer", nullable=false)
      * @Mapping\GeneratedValue(strategy="AUTO")
      */
-    protected int $id;
+    protected int $id = 0;
 
     /**
      * @Mapping\Column(type="string", unique=true)
      *
      * @Constraints\NotBlank()
      */
-    protected string $name;
+    protected string $name = '';
 
     /**
-     * @Mapping\ManyToMany(targetEntity="User")
-     * @Mapping\JoinTable(name="role_user",
-     *      joinColumns={@Mapping\JoinColumn(name="role_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@Mapping\JoinColumn(name="user_id", referencedColumnName="id")}
-     *  )
+     * @Mapping\ManyToMany(targetEntity="User", mappedBy="Roles")
      * @var Collection<int, User>
      */
     protected Collection $users;
@@ -46,11 +42,6 @@ class Role
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function setId(int $id): void
-    {
-        $this->id = $id;
     }
 
     public function getName(): string

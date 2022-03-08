@@ -8,11 +8,17 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use XIP\App\Infrastructure\Http\Web\Request\UserRequest;
 use XIP\Shared\Infrastructure\Http\Request\AbstractRequest;
+use XIP\User\Application\Validator\Constraint\EmailUnique;
+use XIP\User\Application\Validator\Constraint\RolesExist;
 
 /**
  * @covers \XIP\App\Infrastructure\Http\Web\Request\UserRequest
@@ -51,9 +57,70 @@ class UserRequestTest extends TestCase
         // Validate
         $this->assertEquals(
             [
+                'name' => [
+                    new Required([
+                        new NotBlank(),
+                    ]),
+                ],
                 'email' => [
-                    new NotBlank(),
-                    new Email(),
+                    new Required([
+                        new NotBlank(),
+                        new Email(),
+                        new EmailUnique(),
+                    ]),
+                ],
+                'roles' => [
+                    new Required([
+                        new Type('array'),
+                        new Count(['min' => 1]),
+                        new RolesExist(),
+                    ])
+                ],
+            ],
+            $result
+        );
+    }
+
+    /**
+     * @covers \XIP\App\Infrastructure\Http\Web\Request\UserRequest::constraints
+     */
+    public function testConstraintsWithUserId(): void
+    {
+        $request = new Request([], [], ['userId' => 1]);
+        $this->requestStackMock->expects($this->once())
+            ->method('getCurrentRequest')
+            ->willReturn($request);
+
+        // Execute
+        $result = $this->userRequest->constraints();
+
+        // Validate
+        $this->assertEquals(
+            [
+                'name' => [
+                    new Required([
+                        new NotBlank(),
+                    ]),
+                ],
+                'email' => [
+                    new Required([
+                        new NotBlank(),
+                        new Email(),
+                        new EmailUnique(),
+                    ]),
+                ],
+                'roles' => [
+                    new Required([
+                        new Type('array'),
+                        new Count(['min' => 1]),
+                        new RolesExist(),
+                    ])
+                ],
+                'password' => [
+                    new Required([
+                        new Type('string'),
+                        new Length(['min' => 8]),
+                    ])
                 ]
             ],
             $result

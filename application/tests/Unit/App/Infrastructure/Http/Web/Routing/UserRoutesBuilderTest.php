@@ -62,11 +62,48 @@ class UserRoutesBuilderTest extends TestCase
         // Validate
         $this->assertInstanceOf(RouteCollection::class, $routeCollection);
         $routes = $routeCollection->all();
-        $this->assertCount(1, $routes);
+        $this->assertCount(7, $routes);
+
         $this->assertArrayHasKey('users', $routes);
         $this->assertInstanceOf(Route::class, $route = $routes['users']);
         $this->assertSame('/users', $route->getPath());
         $this->assertSame([Request::METHOD_GET], $route->getMethods());
         $this->assertSame([UserController::class, 'index'], $route->getDefaults()['_controller']);
+
+        $this->assertArrayHasKey('users.show', $routes);
+        $this->assertInstanceOf(Route::class, $route = $routes['users.show']);
+        $this->assertSame('/users/{userId}/show', $route->getPath());
+        $this->assertSame([Request::METHOD_GET], $route->getMethods());
+        $this->assertSame([UserController::class, 'show'], $route->getDefaults()['_controller']);
+
+        $this->assertArrayHasKey('users.email', $routes);
+        $this->assertInstanceOf(Route::class, $route = $routes['users.email']);
+        $this->assertSame('/users/{email}/email', $route->getPath());
+        $this->assertSame([Request::METHOD_GET], $route->getMethods());
+        $this->assertSame([UserController::class, 'email'], $route->getDefaults()['_controller']);
+
+        $this->assertArrayHasKey('users.exists', $routes);
+        $this->assertInstanceOf(Route::class, $route = $routes['users.exists']);
+        $this->assertSame('/users/{email}/exists', $route->getPath());
+        $this->assertSame([Request::METHOD_GET], $route->getMethods());
+        $this->assertSame([UserController::class, 'exists'], $route->getDefaults()['_controller']);
+
+        $this->assertArrayHasKey('users.store', $routes);
+        $this->assertInstanceOf(Route::class, $route = $routes['users.store']);
+        $this->assertSame('/users/store', $route->getPath());
+        $this->assertSame([Request::METHOD_GET], $route->getMethods());
+        $this->assertSame([UserController::class, 'store'], $route->getDefaults()['_controller']);
+
+        $this->assertArrayHasKey('users.update', $routes);
+        $this->assertInstanceOf(Route::class, $route = $routes['users.update']);
+        $this->assertSame('/users/{userId}/update', $route->getPath());
+        $this->assertSame([Request::METHOD_GET], $route->getMethods());
+        $this->assertSame([UserController::class, 'update'], $route->getDefaults()['_controller']);
+
+        $this->assertArrayHasKey('users.delete', $routes);
+        $this->assertInstanceOf(Route::class, $route = $routes['users.delete']);
+        $this->assertSame('/users/{userId}/delete', $route->getPath());
+        $this->assertSame([Request::METHOD_GET], $route->getMethods());
+        $this->assertSame([UserController::class, 'delete'], $route->getDefaults()['_controller']);
     }
 }

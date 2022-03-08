@@ -6,6 +6,7 @@ namespace XIP\User\Infrastructure\Repository\Doctrine;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\EntityManagerInterface;
 use XIP\Shared\Domain\Exception\ModelNotFoundException;
 use XIP\User\Domain\DataTransferObject\User as UserDto;
 use XIP\User\Domain\Model\Role;
@@ -19,7 +20,10 @@ use XIP\User\Infrastructure\Repository\UserRepositoryInterface;
 class UserDoctrineRepository implements UserRepositoryInterface
 {
     private UserRepository $userRepository;
+    
     private RoleRepository $roleRepository;
+    
+    private ?EntityManagerInterface $entityManager = null;
 
     public function __construct(UserRepository $userRepository, RoleRepository $roleRepository)
     {
@@ -133,16 +137,12 @@ class UserDoctrineRepository implements UserRepositoryInterface
     {
         $userEntity = $this->userRepository->findOneBy(['id' => $user->getId()]);
         
-        $entityManager = $this->userRepository->createQueryBuilder('user')->getEntityManager();
-
-        $entityManager->remove($userEntity);
-        $entityManager->flush();
+        $this->getEntityManager()->remove($userEntity);
+        $this->getEntityManager()->flush();
     }
 
     private function flushEntity(UserDto $userDto, UserEntity $userEntity): void
     {
-        $entityManager = $this->userRepository->createQueryBuilder('user')->getEntityManager();
-
         $now = new \DateTimeImmutable();
 
         $userEntity->setName($userDto->getName());
@@ -155,15 +155,25 @@ class UserDoctrineRepository implements UserRepositoryInterface
             )
         );
 
-        if (!$entityManager->getUnitOfWork()->isInIdentityMap($userEntity)) {
+        if (!$this->getEntityManager()->getUnitOfWork()->isInIdentityMap($userEntity)) {
             $userEntity->setCreatedAt($now);
         }
 
         $userEntity->setUpdatedAt($now);
 
-        $entityManager->persist($userEntity);
-        $entityManager->flush();
+        $this->getEntityManager()->persist($userEntity);
+        $this->getEntityManager()->flush();
     }
+    
+    private function getEntityManager(): EntityManagerInterface
+    {
+        if (null === $this->entityManager) {
+            $this->entityManager = $this->userRepository->createQueryBuilder('user')->getEntityManager();
+        }
+        
+        return $this->entityManager;
+    }
+    
 
     private function hydrate(UserEntity $userEntity): User
     {

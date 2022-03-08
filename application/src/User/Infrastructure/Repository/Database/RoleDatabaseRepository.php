@@ -33,8 +33,8 @@ class RoleDatabaseRepository extends AbstractDatabaseRepository implements RoleR
         $roleInfos = $this->createSelect()
             ->innerJoin(
                 RoleTable::NAME,
-                RoleUserPivot::NAME,
-                RoleUserPivot::NAME,
+                UserRolePivot::NAME,
+                UserRolePivot::NAME,
                 $this->onUserIdEqualsRoleUserUserId()
             )
             ->where($this->whereUserId())
@@ -63,7 +63,7 @@ class RoleDatabaseRepository extends AbstractDatabaseRepository implements RoleR
 
     private function whereUserId(): string
     {
-        return sprintf('%s.%s = :userId', RoleUserPivot::NAME, RoleUserPivot::COLUMN_USER_ID);
+        return sprintf('%s.%s = :userId', UserRolePivot::NAME, UserRolePivot::COLUMN_USER_ID);
     }
 
     private function whereIdInIds(): string
@@ -73,7 +73,7 @@ class RoleDatabaseRepository extends AbstractDatabaseRepository implements RoleR
 
     private function onUserIdEqualsRoleUserUserId(): string
     {
-        return sprintf('%s.%s = %s.%s', RoleTable::NAME, RoleTable::COLUMN_ID, RoleUserPivot::NAME, RoleUserPivot::COLUMN_ROLE_ID);
+        return sprintf('%s.%s = %s.%s', RoleTable::NAME, RoleTable::COLUMN_ID, UserRolePivot::NAME, UserRolePivot::COLUMN_ROLE_ID);
     }
 
     /**

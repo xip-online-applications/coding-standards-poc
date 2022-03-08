@@ -31,17 +31,17 @@ class UserController
         );
     }
     
-    public function mail(string $mail): void
+    public function email(string $email): void
     {
         dd(
-            $this->userRepository->findOrFailByEmail($mail)
+            $this->userRepository->findOrFailByEmail($email)
         );
     }
     
-    public function exists(string $mail): void
+    public function exists(string $email): void
     {
         dd(
-            $this->userRepository->exists($mail)
+            $this->userRepository->exists($email)
         );
     }
     

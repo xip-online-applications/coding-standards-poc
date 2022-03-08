@@ -6,14 +6,14 @@ namespace XIP\User\Infrastructure\Repository\Doctrine;
 
 use XIP\User\Domain\Model\Role;
 use XIP\User\Infrastructure\Repository\Doctrine\Entity\Role as RoleEntity;
-use XIP\User\Infrastructure\Repository\Doctrine\Repository\RoleRepository;
+use XIP\User\Infrastructure\Repository\Doctrine\Repository\RoleRepository as RoleEntityRepository;
 use XIP\User\Infrastructure\Repository\RoleRepositoryInterface;
 
 class RoleDoctrineRepository implements RoleRepositoryInterface
 {
-    private RoleRepository $roleRepository;
+    private RoleEntityRepository $roleRepository;
 
-    public function __construct(RoleRepository $roleRepository)
+    public function __construct(RoleEntityRepository $roleRepository)
     {
         $this->roleRepository = $roleRepository;
     }

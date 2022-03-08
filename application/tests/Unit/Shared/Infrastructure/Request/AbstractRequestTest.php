@@ -352,6 +352,76 @@ class AbstractRequestTest extends TestCase
         $this->assertSame($expectedValue ?? false, $result);
     }
 
+    public function arrayValueScenarioProvider(): array
+    {
+        return [
+            'A array with the right key' => [
+                'expectedValue' => ['1', '2', '3'],
+                'key' => 'key',
+                'value' => ['1', '2', '3'],
+            ],
+            'A array value with the right key' => [
+                'expectedValue' => [],
+                'key' => 'key',
+                'value' => [],
+            ],
+            'No key set' => [
+                'expectedValue' => null,
+                'key' => null,
+                'value' => null,
+            ],
+            'A null value for a key' => [
+                'expectedValue' => null,
+                'key' => 'key',
+                'value' => null,
+            ]
+        ];
+    }
+
+    /**
+     * @covers \XIP\Shared\Infrastructure\Http\Request\AbstractRequest::resolveArrayOrNullValue
+     *
+     * @dataProvider arrayValueScenarioProvider
+     */
+    public function testResolveArrayOrNullValue(?array $expectedValue, ?string $key, ?array $value): void
+    {
+        // Setup
+        $requestData = null !== $key ? [$key => $value] : [];
+        $request = new Request([], $requestData);
+        $this->requestStackMock->expects($this->once())
+            ->method('getCurrentRequest')
+            ->willReturn($request);
+        $abstractRequest = $this->getAbstractRequest();
+
+        // Execute
+        $result = $abstractRequest->resolveArrayOrNullValue($key ?? 'fake');
+
+        // Validate
+        $this->assertSame($expectedValue, $result);
+    }
+
+    /**
+     * @covers \XIP\Shared\Infrastructure\Http\Request\AbstractRequest::resolveArrayValue
+     *
+     * @dataProvider arrayValueScenarioProvider
+     */
+    public function testResolveArrayValue(?array $expectedValue, ?string $key, ?array $value): void
+    {
+        // Setup
+        $requestData = null !== $key ? [$key => $value] : [];
+        $request = new Request([], $requestData);
+        $this->requestStackMock->expects($this->once())
+            ->method('getCurrentRequest')
+            ->willReturn($request);
+        $abstractRequest = $this->getAbstractRequest();
+
+        // Execute
+        $result = $abstractRequest->resolveArrayValue($key ?? 'fake');
+
+        // Validate
+        $this->assertSame($expectedValue ?? [], $result);
+    }
+
     private function getAbstractRequest(): AbstractRequest
     {
         return new class($this->requestStackMock, $this->validatorMock) extends AbstractRequest {

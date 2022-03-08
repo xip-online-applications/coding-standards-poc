@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace XIP\Tests\Unit\User\Domain\Model;
 
+use XIP\User\Domain\Model\Role;
 use XIP\User\Domain\Model\User;
 use PHPUnit\Framework\TestCase;
 
@@ -20,21 +21,22 @@ class UserTest extends TestCase
                 'name' => 'Patrick Batenburg',
                 'email' => 'patrick.batenburg@x-ip.nl',
                 'password' => null,
-                'roles' => [],
+                'roles' => [1 => new Role(1, 'admin')],
             ],
             'A user with a confirmed account' => [
                 'id' => 1 ,
                 'name' => 'Patrick Batenburg',
                 'mail' => 'patrick.batenburg@x-ip.nl',
                 'password' => 'superSecretPassword',
-                'roles' => [],
+                'roles' => [1 => new Role(1, 'admin')],
+
             ],
             'An user with an invalid email' => [
                 'id' => 1 ,
                 'name' => 'Patrick Batenburg',
                 'mail' => 'patrick.batenburg',
                 'password' => 'superSecretPassword',
-                'roles' => [],
+                'roles' => [1 => new Role(1, 'admin')],
             ]
         ];
     }

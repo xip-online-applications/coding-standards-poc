@@ -20,19 +20,19 @@ class User
      * @Mapping\Column(type="integer", nullable=false)
      * @Mapping\GeneratedValue(strategy="AUTO")
      */
-    private int $id;
+    private int $id = 0;
 
     /**
      * @Mapping\Column(type="string", nullable=false)
      */
-    private string $name;
+    private string $name = '';
 
     /**
      * @Mapping\Column(type="string", unique=true)
      *
      * @Constraints\NotBlank()
      */
-    private string $email;
+    private string $email = '';
 
     /**
      * @Mapping\Column(type="string", nullable=true)
@@ -40,11 +40,7 @@ class User
     private ?string $password = null;
 
     /**
-     * @Mapping\ManyToMany(targetEntity="Role")
-     * @Mapping\JoinTable(name="role_user",
-     *      joinColumns={@Mapping\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@Mapping\JoinColumn(name="role_id", referencedColumnName="id")}
-     * )
+     * @Mapping\ManyToMany(targetEntity="Role", inversedBy="users")
      * @var Collection<int, Role>
      */
     private Collection $roles;

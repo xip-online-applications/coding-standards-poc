@@ -232,10 +232,10 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
     private function insertRoleForUser(int $roleId, int $userId): void
     {
         $this->createQueryBuilder()
-            ->insert(RoleUserPivot::NAME)
+            ->insert(UserRolePivot::NAME)
             ->values([
-                RoleUserPivot::COLUMN_ROLE_ID => ':roleId',
-                RoleUserPivot::COLUMN_USER_ID => ':userId',
+                UserRolePivot::COLUMN_ROLE_ID => ':roleId',
+                UserRolePivot::COLUMN_USER_ID => ':userId',
             ])
             ->setParameter('roleId', $roleId)
             ->setParameter('userId', $userId)
@@ -246,13 +246,13 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
     {
         $queryBuilder = $this->createQueryBuilder();
 
-        $queryBuilder->delete(RoleUserPivot::NAME)
-            ->where(sprintf('%s.%s = :userId', RoleUserPivot::NAME, RoleUserPivot::COLUMN_USER_ID))
+        $queryBuilder->delete(UserRolePivot::NAME)
+            ->where(sprintf('%s.%s = :userId', UserRolePivot::NAME, UserRolePivot::COLUMN_USER_ID))
             ->setParameter('userId', $userId)
             ->where($queryBuilder->expr()->or(
                 ...array_map(
                     static fn (int $roleId): string => $queryBuilder->expr()->eq(
-                        sprintf('%s.%s', RoleUserPivot::NAME, RoleUserPivot::COLUMN_ROLE_ID),
+                        sprintf('%s.%s', UserRolePivot::NAME, UserRolePivot::COLUMN_ROLE_ID),
                         $roleId
                     ),
                     $rolesIds
