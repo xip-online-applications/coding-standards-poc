@@ -48,7 +48,7 @@ class EmailUniqueValidator extends ConstraintValidator
         }
         
         $user = $this->userRepository->findOrFailById((int)$userId);
-        
+
         return $user->getEmail() === $value;
     }
 }

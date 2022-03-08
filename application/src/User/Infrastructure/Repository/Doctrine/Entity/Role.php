@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace XIP\User\Infrastructure\Repository\Doctrine\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping;
 use Symfony\Component\Validator\Constraints;
@@ -28,10 +29,18 @@ class Role
     protected string $name;
 
     /**
-     * @Mapping\ManyToMany(targetEntity="User", inversedBy="users")
-     * @var Collection<int, User>
+     * @Mapping\ManyToMany(targetEntity="User")
+     * @Mapping\JoinTable(name="role_user",
+     *      joinColumns={@Mapping\JoinColumn(name="role_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@Mapping\JoinColumn(name="user_id", referencedColumnName="id")}
+     *  )
      */
     protected Collection $users;
+    
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     public function getId(): int
     {

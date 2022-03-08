@@ -9,8 +9,6 @@ Implement the validationData method, make sure you are explicit in which data yo
 To use the request you can import it into your controller. The validate method will be called automatically. It is 
 configured using service method calls.
 
-
-
 ## Docs
 ### Constraints
 https://symfony.com/doc/current/reference/constraints.html#basic-constraints

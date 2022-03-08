@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace XIP\User\Infrastructure\Repository\Doctrine\Entity;
 
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping;
 use Symfony\Component\Validator\Constraints;
@@ -39,8 +40,12 @@ class User
     private ?string $password;
 
     /**
-     * @Mapping\ManyToMany(targetEntity="Role", mappedBy="role")
-     * @var Collection<int, Role>
+     * @Mapping\ManyToMany(targetEntity="Role")
+     * @Mapping\JoinTable(name="role_user",
+     *      joinColumns={@Mapping\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@Mapping\JoinColumn(name="role_id", referencedColumnName="id")}
+     * )
+     * @var Collection|Role[]
      */
     private Collection $roles;
 
@@ -53,6 +58,11 @@ class User
      * @Mapping\Column(name="updated_at", type="datetime")
      */
     private DateTimeInterface $updatedAt;
+    
+    public function __construct()
+    {
+        $this->roles = new ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -94,9 +104,9 @@ class User
     }
 
     /**
-     * @return array<int, Role>
+     * @return Collection|Role[]
      */
-    public function getRoles(): array
+    public function getRoles(): Collection
     {
         return $this->roles;
     }

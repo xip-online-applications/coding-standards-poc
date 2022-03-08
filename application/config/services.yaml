@@ -31,3 +31,7 @@ services:
 
     XIP\User\Infrastructure\Repository\UserRepositoryInterface: '@XIP\User\Infrastructure\Repository\Database\UserDatabaseRepository'
     XIP\User\Infrastructure\Repository\RoleRepositoryInterface: '@XIP\User\Infrastructure\Repository\Database\RoleDatabaseRepository'
+
+    XIP\App\Application\EventListeners\ConstraintViolationExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
