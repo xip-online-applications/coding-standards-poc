@@ -141,5 +141,4 @@ abstract class AbstractRequest
 
         return $data[$key];
     }
-    
 }

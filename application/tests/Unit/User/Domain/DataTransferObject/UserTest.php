@@ -19,11 +19,13 @@ class UserTest extends TestCase
                 'Patrick Batenburg',
                 'patrick.batenburg@x-ip.nl',
                 null,
+                [],
             ],
             'A confirmed user dto' => [
                 'Patrick Batenburg',
                 'patrick.batenburg@x-ip.nl',
                 'superSecretPassword',
+                [],
             ],
         ];
     }
@@ -31,15 +33,16 @@ class UserTest extends TestCase
     /**
      * @dataProvider userScenarioProvider
      */
-    public function testModel(string $name, string $email, ?string $password): void
+    public function testModel(string $name, string $email, ?string $password, array $roleIds): void
     {
         // Execute
-        $result = new User($name, $email, $password);
+        $result = new User($name, $email, $password, $roleIds);
 
         // Validate
         $this->assertInstanceOf(User::class, $result);
         $this->assertSame($name, $result->getName());
         $this->assertSame($email, $result->getEmail());
         $this->assertSame($password, $result->getPassword());
+        $this->assertSame($roleIds, $result->getRoleIds());
     }
 }

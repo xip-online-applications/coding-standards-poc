@@ -186,7 +186,7 @@ class UserDoctrineRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param Collection|RoleEntity[] $rolesCollection
+     * @param Collection<int, RoleEntity> $rolesCollection
      * @return array<int, Role>
      */
     private function hydrateAllRoles(Collection $rolesCollection): array

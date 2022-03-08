@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace XIP\Shared\Infrastructure\Repository;
 
 use Doctrine\DBAL\Connection;

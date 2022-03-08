@@ -34,9 +34,10 @@ class Role
      *      joinColumns={@Mapping\JoinColumn(name="role_id", referencedColumnName="id")},
      *      inverseJoinColumns={@Mapping\JoinColumn(name="user_id", referencedColumnName="id")}
      *  )
+     * @var Collection<int, User>
      */
     protected Collection $users;
-    
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -63,18 +64,10 @@ class Role
     }
 
     /**
-     * @return array<int, User>
+     * @return Collection<int, User>
      */
-    public function getUsers(): array
+    public function getUsers(): Collection
     {
         return $this->users;
-    }
-
-    /**
-     * @param array<int, User> $users
-     */
-    public function setUsers(array $users): void
-    {
-        $this->users = $users;
     }
 }

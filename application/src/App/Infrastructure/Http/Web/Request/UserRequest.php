@@ -48,7 +48,8 @@ class UserRequest extends AbstractRequest
             ],
         ];
         
-        if (null !== $this->requestStack->getCurrentRequest()->attributes->get('userId')) {
+        $userId = $this->requestStack->getCurrentRequest()->attributes?->get('userId') ?? null;
+        if (null !== $userId) {
             $constraints[self::KEY_PASSWORD] = [
                 new Required([
                     new Type('string'),

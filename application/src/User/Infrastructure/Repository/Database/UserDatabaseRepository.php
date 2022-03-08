@@ -247,7 +247,7 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
         $queryBuilder = $this->createQueryBuilder();
 
         $queryBuilder->delete(RoleUserPivot::NAME)
-            ->where('%s.%s = :userId', RoleUserPivot::NAME, RoleUserPivot::COLUMN_USER_ID)
+            ->where(sprintf('%s.%s = :userId', RoleUserPivot::NAME, RoleUserPivot::COLUMN_USER_ID))
             ->setParameter('userId', $userId)
             ->where($queryBuilder->expr()->or(
                 ...array_map(

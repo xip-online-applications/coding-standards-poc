@@ -41,7 +41,7 @@ class EmailUniqueValidator extends ConstraintValidator
     
     private function emailIsNotChanged(string $value): bool
     {
-        $userId = $this->requestStack->getCurrentRequest()->attributes->get('userId');
+        $userId = $this->requestStack->getCurrentRequest()->attributes?->get('userId') ?? null;
         
         if (null === $userId) {
             return false;

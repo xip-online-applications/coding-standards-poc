@@ -37,7 +37,7 @@ class User
     /**
      * @Mapping\Column(type="string", nullable=true)
      */
-    private ?string $password;
+    private ?string $password = null;
 
     /**
      * @Mapping\ManyToMany(targetEntity="Role")
@@ -45,20 +45,20 @@ class User
      *      joinColumns={@Mapping\JoinColumn(name="user_id", referencedColumnName="id")},
      *      inverseJoinColumns={@Mapping\JoinColumn(name="role_id", referencedColumnName="id")}
      * )
-     * @var Collection|Role[]
+     * @var Collection<int, Role>
      */
     private Collection $roles;
 
     /**
      * @Mapping\Column(name="created_at", type="datetime")
      */
-    private DateTimeInterface $createdAt;
+    private ?DateTimeInterface $createdAt = null;
 
     /**
      * @Mapping\Column(name="updated_at", type="datetime")
      */
-    private DateTimeInterface $updatedAt;
-    
+    private ?DateTimeInterface $updatedAt = null;
+
     public function __construct()
     {
         $this->roles = new ArrayCollection();
@@ -104,7 +104,7 @@ class User
     }
 
     /**
-     * @return Collection|Role[]
+     * @return Collection<int, Role>
      */
     public function getRoles(): Collection
     {
@@ -121,7 +121,7 @@ class User
         return $this;
     }
 
-    public function getCreatedAt(): DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
@@ -131,7 +131,7 @@ class User
         $this->createdAt = $createdAt;
     }
 
-    public function getUpdatedAt(): DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }

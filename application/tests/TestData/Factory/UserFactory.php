@@ -15,6 +15,7 @@ class UserFactory extends AbstractFactory
             array_key_exists('name', $attributes) ? $attributes['name'] : $this->generator->name,
             array_key_exists('email', $attributes) ? $attributes['email'] : $this->generator->email,
             array_key_exists('password', $attributes) ? $attributes['password'] : $this->generator->password,
+            []
         );
     }
 }

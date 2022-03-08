@@ -20,18 +20,21 @@ class UserTest extends TestCase
                 'name' => 'Patrick Batenburg',
                 'email' => 'patrick.batenburg@x-ip.nl',
                 'password' => null,
+                'roles' => [],
             ],
             'A user with a confirmed account' => [
                 'id' => 1 ,
                 'name' => 'Patrick Batenburg',
                 'mail' => 'patrick.batenburg@x-ip.nl',
                 'password' => 'superSecretPassword',
+                'roles' => [],
             ],
             'An user with an invalid email' => [
                 'id' => 1 ,
                 'name' => 'Patrick Batenburg',
                 'mail' => 'patrick.batenburg',
                 'password' => 'superSecretPassword',
+                'roles' => [],
             ]
         ];
     }
@@ -39,10 +42,10 @@ class UserTest extends TestCase
     /**
      * @dataProvider userScenarioProvider
      */
-    public function testModel(int $id, string $name, string $email, ?string $password): void
+    public function testModel(int $id, string $name, string $email, ?string $password, array $roles): void
     {
         // Execute
-        $result = new User($id, $name, $email, $password);
+        $result = new User($id, $name, $email, $password, $roles);
 
         // Validate
         $this->assertInstanceOf(User::class, $result);
@@ -50,5 +53,6 @@ class UserTest extends TestCase
         $this->assertSame($name, $result->getName());
         $this->assertSame($email, $result->getEmail());
         $this->assertSame($password, $result->getPassword());
+        $this->assertSame($roles, $result->getRoles());
     }
 }

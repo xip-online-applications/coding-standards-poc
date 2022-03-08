@@ -88,7 +88,7 @@ class RoleDatabaseRepository extends AbstractDatabaseRepository implements RoleR
     }
 
     /**
-     * @param array<int, array<string, (int|string)>> $userInfos
+     * @param array<int, array<string, (int|string)>> $roleInfos
      * @return Role[]
      */
     private function hydrateAll(array $roleInfos): array

@@ -17,7 +17,9 @@
     <issueHandlers>
         <PropertyNotSetInConstructor>
             <errorLevel type="suppress">
-                <directory name="tests"/>
+                <directory name="tests" />
+                <directory name="src/*/Infrastructure/Repository/Doctrine/Entity" />
+                <directory name="src/*/Application/Validator/Constraint" />
             </errorLevel>
         </PropertyNotSetInConstructor>
 
