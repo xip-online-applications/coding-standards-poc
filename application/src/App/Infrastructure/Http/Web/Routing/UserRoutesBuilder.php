@@ -32,5 +32,13 @@ class UserRoutesBuilder implements WebRoutesBuilderInterface
         $routes->add('users.store', '/users/store')
             ->controller([UserController::class, 'store'])
             ->methods([Request::METHOD_GET]);
+
+        $routes->add('users.update', '/users/{userId}/update')
+            ->controller([UserController::class, 'update'])
+            ->methods([Request::METHOD_GET]);
+        
+        $routes->add('users.delete', '/users/{userId}/delete')
+            ->controller([UserController::class,  'delete'])
+            ->methods([Request::METHOD_GET]);
     }
 }

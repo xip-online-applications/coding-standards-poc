@@ -61,4 +61,33 @@ class UserController
             )
         );
     }
+    
+    public function update(UserRequest $userRequest, int $userId): void
+    {
+        $user = $this->userRepository->findOrFailById($userId);
+        
+        dd(
+            $this->userRepository->update(
+                new UserDto(
+                    $userRequest->resolveStringValue(UserRequest::KEY_NAME),
+                    $userRequest->resolveStringValue(UserRequest::KEY_EMAIL),
+                    null,
+                    array_map(
+                        static fn(string $number): int => (int)$number,
+                        $userRequest->resolveArrayValue(UserRequest::KEY_ROLES)
+                    )
+                ),
+                $user
+            )
+        );
+    }
+    
+    public function delete(int $userId): void
+    {
+        $user = $this->userRepository->findOrFailById($userId);
+        
+        dd(
+            $this->userRepository->delete($user)
+        );
+    }
 }

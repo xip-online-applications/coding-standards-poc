@@ -161,12 +161,10 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
             ->update(UserTable::NAME)
             ->where($this->whereIdEquals())
             ->setParameter('id', $user->getId())
-            ->values([
-                UserTable::COLUMN_NAME => ':name',
-                UserTable::COLUMN_EMAIL => ':email',
-                UserTable::COLUMN_PASSWORD => ':password',
-                UserTable::COLUMN_UPDATED_AT => ':updatedAt',
-            ])
+            ->set(UserTable::COLUMN_NAME, ':name')
+            ->set(UserTable::COLUMN_EMAIL, ':email')
+            ->set(UserTable::COLUMN_PASSWORD, ':password')
+            ->set(UserTable::COLUMN_UPDATED_AT, ':updatedAt')
             ->setParameter('name', $userDto->getName())
             ->setParameter('email', $userDto->getEmail())
             ->setParameter('password', $userDto->getPassword())
@@ -183,10 +181,10 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
     public function delete(User $user): void
     {
         $this->createQueryBuilder()
-            ->from(UserTable::NAME)
+            ->delete(UserTable::NAME)
             ->where($this->whereIdEquals())
             ->setParameter('id', $user->getId())
-            ->delete();
+            ->executeQuery();
     }
 
     private function createSelect(array $select = UserTable::SELECT): QueryBuilder
@@ -248,7 +246,7 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
     {
         $queryBuilder = $this->createQueryBuilder();
 
-        $queryBuilder->from(RoleUserPivot::NAME)
+        $queryBuilder->delete(RoleUserPivot::NAME)
             ->where('%s.%s = :userId', RoleUserPivot::NAME, RoleUserPivot::COLUMN_USER_ID)
             ->setParameter('userId', $userId)
             ->where($queryBuilder->expr()->or(
