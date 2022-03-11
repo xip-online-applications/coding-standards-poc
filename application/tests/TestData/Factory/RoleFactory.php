@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace XIP\Tests\TestData\Factory;
 
-
 use XIP\User\Domain\Model\Role;
 
 class RoleFactory extends AbstractFactory

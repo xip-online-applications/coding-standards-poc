@@ -11,11 +11,11 @@ use XIP\User\Infrastructure\Repository\RoleRepositoryInterface;
 
 class RoleDoctrineRepository implements RoleRepositoryInterface
 {
-    private RoleEntityRepository $roleRepository;
+    private RoleEntityRepository $roleEntityRepository;
 
-    public function __construct(RoleEntityRepository $roleRepository)
+    public function __construct(RoleEntityRepository $roleEntityRepository)
     {
-        $this->roleRepository = $roleRepository;
+        $this->roleEntityRepository = $roleEntityRepository;
     }
     
     /**
@@ -23,7 +23,7 @@ class RoleDoctrineRepository implements RoleRepositoryInterface
      */
     public function findByUserId(int $userId): array
     {
-        $roles = $this->roleRepository->createQueryBuilder('role')
+        $roles = $this->roleEntityRepository->createQueryBuilder('role')
             ->indexBy('role', 'role.id')
             ->innerJoin('role.users',  'user')
             ->where('user.id = :userId')
@@ -36,7 +36,7 @@ class RoleDoctrineRepository implements RoleRepositoryInterface
 
     public function exists(array $ids): bool
     {
-        $count = $this->roleRepository->createQueryBuilder('role')
+        $count = $this->roleEntityRepository->createQueryBuilder('role')
             ->select('count(role.id)')
             ->where('role.id in (:ids)')
             ->setParameter('ids', $ids)

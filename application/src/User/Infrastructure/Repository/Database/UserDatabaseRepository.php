@@ -17,6 +17,8 @@ use XIP\User\Infrastructure\Repository\UserRepositoryInterface;
 class UserDatabaseRepository extends AbstractDatabaseRepository implements UserRepositoryInterface
 {
     private RoleRepositoryInterface $roleRepository;
+    
+    private array $users = [];
 
     public function __construct(
         Connection $connection,
@@ -56,6 +58,10 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
 
     public function findById(int $id): ?User
     {
+        if (array_key_exists($id, $this->users)) {
+            return $this->users[$id];
+        }
+        
         $userInfo = $this->createSelect()
             ->where($this->whereIdEquals())
             ->setParameter('id', $id)
@@ -66,7 +72,9 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
             return null;
         }
 
-        return $this->hydrate($userInfo);
+        $this->users[$id] = $this->hydrate($userInfo);
+        
+        return $this->users[$id];
     }
 
     public function findOrFailById(int $id): User

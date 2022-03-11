@@ -13,27 +13,27 @@ use XIP\User\Domain\Model\Role;
 use XIP\User\Domain\Model\User;
 use XIP\User\Infrastructure\Repository\Doctrine\Entity\Role as RoleEntity;
 use XIP\User\Infrastructure\Repository\Doctrine\Entity\User as UserEntity;
-use XIP\User\Infrastructure\Repository\Doctrine\Repository\RoleRepository;
-use XIP\User\Infrastructure\Repository\Doctrine\Repository\UserRepository;
+use XIP\User\Infrastructure\Repository\Doctrine\Repository\RoleRepository as RoleEntityRepository;
+use XIP\User\Infrastructure\Repository\Doctrine\Repository\UserRepository as UserEntityRepository;
 use XIP\User\Infrastructure\Repository\UserRepositoryInterface;
 
 class UserDoctrineRepository implements UserRepositoryInterface
 {
-    private UserRepository $userRepository;
+    private UserEntityRepository $userEntityRepository;
     
-    private RoleRepository $roleRepository;
+    private RoleEntityRepository $roleEntityRepository;
     
     private ?EntityManagerInterface $entityManager = null;
 
-    public function __construct(UserRepository $userRepository, RoleRepository $roleRepository)
+    public function __construct(UserEntityRepository $userEntityRepository, RoleEntityRepository $roleEntityRepository)
     {
-        $this->userRepository = $userRepository;
-        $this->roleRepository = $roleRepository;
+        $this->userEntityRepository = $userEntityRepository;
+        $this->roleEntityRepository = $roleEntityRepository;
     }
 
     public function findAll(): array
     {
-        $userEntities = $this->userRepository->createQueryBuilder('user')
+        $userEntities = $this->userEntityRepository->createQueryBuilder('user')
             ->indexBy('user', 'user.id')
             ->getQuery()
             ->execute();
@@ -43,7 +43,7 @@ class UserDoctrineRepository implements UserRepositoryInterface
 
     public function findByIds(array $ids): array
     {
-        $userEntities = $this->userRepository->createQueryBuilder('user')
+        $userEntities = $this->userEntityRepository->createQueryBuilder('user')
             ->indexBy('user', 'user.id')
             ->where('user.id in :ids')
             ->setParameter('ids', $ids)
@@ -55,7 +55,7 @@ class UserDoctrineRepository implements UserRepositoryInterface
 
     public function findById(int $id): ?User
     {
-        $userEntity = $this->userRepository->findOneBy(['id' => $id]);
+        $userEntity = $this->userEntityRepository->findOneBy(['id' => $id]);
 
         if (null === $userEntity) {
             return null;
@@ -79,7 +79,7 @@ class UserDoctrineRepository implements UserRepositoryInterface
 
     public function findByEmail(string $email): ?User
     {
-        $userEntity = $this->userRepository->findOneBy(['email' => $email]);
+        $userEntity = $this->userEntityRepository->findOneBy(['email' => $email]);
 
         if (null === $userEntity) {
             return null;
@@ -117,7 +117,7 @@ class UserDoctrineRepository implements UserRepositoryInterface
 
     public function store(UserDto $userDto): User
     {
-        $userEntity = new UserEntity();
+        $userEntity = $this->userEntityRepository->create();
 
         $this->flushEntity($userDto, $userEntity);
 
@@ -126,7 +126,7 @@ class UserDoctrineRepository implements UserRepositoryInterface
 
     public function update(UserDto $userDto, User $user): User
     {
-        $userEntity = $this->userRepository->findOneBy(['id' => $user->getId()]);
+        $userEntity = $this->userEntityRepository->findOneBy(['id' => $user->getId()]);
 
         $this->flushEntity($userDto, $userEntity);
 
@@ -135,7 +135,7 @@ class UserDoctrineRepository implements UserRepositoryInterface
 
     public function delete(User $user): void
     {
-        $userEntity = $this->userRepository->findOneBy(['id' => $user->getId()]);
+        $userEntity = $this->userEntityRepository->findOneBy(['id' => $user->getId()]);
         
         $this->getEntityManager()->remove($userEntity);
         $this->getEntityManager()->flush();
@@ -151,7 +151,7 @@ class UserDoctrineRepository implements UserRepositoryInterface
 
         $userEntity->setRoles(
             new ArrayCollection(
-                $this->roleRepository->findBy(['id' => $userDto->getRoleIds()])
+                $this->roleEntityRepository->findBy(['id' => $userDto->getRoleIds()])
             )
         );
 
@@ -168,7 +168,7 @@ class UserDoctrineRepository implements UserRepositoryInterface
     private function getEntityManager(): EntityManagerInterface
     {
         if (null === $this->entityManager) {
-            $this->entityManager = $this->userRepository->createQueryBuilder('user')->getEntityManager();
+            $this->entityManager = $this->userEntityRepository->createQueryBuilder('user')->getEntityManager();
         }
         
         return $this->entityManager;
