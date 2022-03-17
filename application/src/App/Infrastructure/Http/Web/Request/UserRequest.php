@@ -54,7 +54,7 @@ class UserRequest extends AbstractRequest
                 new Required([
                     new Type('string'),
                     new Length(['min' => 8]),
-                ])    
+                ])
             ];
         }
         
