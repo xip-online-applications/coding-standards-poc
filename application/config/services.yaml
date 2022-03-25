@@ -12,6 +12,9 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         bind:
             $databaseDateTimeFormat: 'Y-m-d H:i:s'
+            $messageCommandBus: '@commands.bus'
+            $messageEventBus: '@events.bus'
+            $messageQueryBus: '@queries.bus'
 
     XIP\App\Infrastructure\Http\Web\Controller\:
         resource: '../src/App/Infrastructure/Http/Web/Controller/'

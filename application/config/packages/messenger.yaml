@@ -1,0 +1,49 @@
+framework:
+    messenger:
+        default_bus: commands.bus
+
+        buses:
+            commands.bus: ~
+            events.bus: ~
+            queries.bus: ~
+
+        failure_transport: failed_transport
+
+        transports:
+            commands_transport:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    exchange:
+                        name: command_queue
+                    queues:
+                        command_queue: ~
+                retry_strategy:
+                    delay: 3000
+            events_transport:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    exchange:
+                        name: event_queue
+                    queues:
+                        event_queue: ~
+                retry_strategy:
+                    delay: 5000
+            queries_transport: 'sync://'
+            failed_transport:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    exchange:
+                        name: failed_queue
+                    queues:
+                        failed_queue: ~
+
+        routing:
+            XIP\User\Application\Command\StoreUserCommand: [commands_transport]
+
+            XIP\User\Application\Event\UserStoredEvent: [events_transport]
+            XIP\User\Application\Event\UserUpdatedEvent: [events_transport]
+
+            XIP\User\Application\Query\FindUserByEmailQuery: [queries_transport]
+            XIP\User\Application\Query\FindUserQuery: [queries_transport]
+            XIP\User\Application\Query\FindUsersQuery: [queries_transport]
+            XIP\User\Application\Query\UserExistsQuery: [queries_transport]

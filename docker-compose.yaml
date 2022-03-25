@@ -32,16 +32,28 @@ services:
 
   database:
     container_name: database
-    image: library/mariadb:10.7.1
+    image: mariadb:10.7.1
     environment:
       MYSQL_ROOT_PASSWORD: superSecret
       MYSQL_DATABASE: xip
       MYSQL_USER: xip
       MYSQL_PASSWORD: superSecretOne
     ports:
-      - "3306:3306"
+      - 3306:3306
     volumes:
       - ./storage/database:/var/lib/mysql:cached
+    networks:
+      - xip-network
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.9.13-management
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ./storage/rabbitmq/data:/var/lib/rabbitmq:cached
+      - ./storage/rabbitmq/log:/var/log/rabbitmq:cached
     networks:
       - xip-network
 

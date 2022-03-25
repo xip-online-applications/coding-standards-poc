@@ -4,7 +4,7 @@ FROM php:8.1-fpm
 RUN rm /etc/apt/preferences.d/no-debian-php && \
     apt-get update && apt-get install -y \
     openssl g++ libzip-dev git zlib1g-dev libicu-dev libcurl3-dev zip unzip libpq-dev libonig-dev wget gpg \
-    libxml2-dev
+    libxml2-dev librabbitmq-dev
 
 # Install php plugins
 RUN docker-php-ext-configure intl \
@@ -17,6 +17,12 @@ RUN composer --version
 
 # Install XDebug (easy debugging & code coverage)
 RUN if [ ! "$LIVE" ]; then yes | pecl install xdebug && docker-php-ext-enable xdebug; fi
+
+# Install AMQP
+RUN docker-php-source extract \
+    && git clone --branch master --depth 1 https://github.com/php-amqp/php-amqp.git /usr/src/php/ext/amqp \
+    && cd /usr/src/php/ext/amqp && git submodule update --init \
+    && docker-php-ext-install amqp
 
 # Add config files
 COPY php.ini /usr/local/etc/php/php.ini

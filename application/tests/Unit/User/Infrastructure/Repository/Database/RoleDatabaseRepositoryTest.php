@@ -85,7 +85,6 @@ class RoleDatabaseRepositoryTest extends TestCase
         $results = $this->roleDatabaseRepository->findByUserId($userId);
 
         // Validate
-        $this->assertIsArray($results);
         $this->assertCount(3, $results);
 
         $this->assertArrayHasKey(1, $results);

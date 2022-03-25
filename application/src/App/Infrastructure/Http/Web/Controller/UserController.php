@@ -4,7 +4,18 @@ declare(strict_types=1);
 
 namespace XIP\App\Infrastructure\Http\Web\Controller;
 
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use XIP\App\Infrastructure\Http\Web\Request\UserRequest;
+use XIP\Shared\Application\Bus\CommandBusInterface;
+use XIP\Shared\Application\Bus\QueryBusInterface;
+use XIP\User\Application\Command\StoreUserCommand;
+use XIP\User\Application\Query\FindUserByEmailQuery;
+use XIP\User\Application\Query\FindUserQuery;
+use XIP\User\Application\Query\UserExistsQuery;
+use XIP\User\Application\Query\UserExistsResult;
+use XIP\User\Application\Query\UserResult;
+use XIP\User\Application\Query\FindUsersQuery;
+use XIP\User\Application\Query\UsersResult;
 use XIP\User\Domain\DataTransferObject\User as UserDto;
 use XIP\User\Infrastructure\Repository\UserRepositoryInterface;
 
@@ -12,43 +23,76 @@ class UserController
 {
     private UserRepositoryInterface $userRepository;
 
-    public function __construct(UserRepositoryInterface $userRepository)
-    {
+    private QueryBusInterface $queryBus;
+
+    private CommandBusInterface $commandBus;
+
+    public function __construct(
+        UserRepositoryInterface $userRepository,
+        QueryBusInterface $queryBus,
+        CommandBusInterface $commandBus
+    ) {
         $this->userRepository = $userRepository;
+        $this->queryBus = $queryBus;
+        $this->commandBus = $commandBus;
     }
     
     public function index(): void
     {
+        $usersResult = $this->queryBus->query(new FindUsersQuery());
+
+        if (!$usersResult instanceof UsersResult) {
+            throw new UnexpectedTypeException($usersResult, UsersResult::class);
+        }
+        
         dd(
-            $this->userRepository->findAll()
+            $usersResult->getUsers()
         );
     }
 
     public function show(int $userId): void
     {
+        $userResult = $this->queryBus->query(new FindUserQuery($userId));
+
+        if (!$userResult instanceof UserResult) {
+            throw new UnexpectedTypeException($userResult, UserResult::class);
+        }
+
         dd(
-            $this->userRepository->findOrFailById($userId)
+            $userResult->getUser()
         );
     }
     
     public function email(string $email): void
     {
+        $userResult = $this->queryBus->query(new FindUserByEmailQuery($email));
+
+        if (!$userResult instanceof UserResult) {
+            throw new UnexpectedTypeException($userResult, UserResult::class);
+        }
+
         dd(
-            $this->userRepository->findOrFailByEmail($email)
+            $userResult->getUser()
         );
     }
     
     public function exists(string $email): void
     {
+        $userExistsResult = $this->queryBus->query(new UserExistsQuery($email));
+        
+        if (!$userExistsResult instanceof UserExistsResult) {
+            throw new UnexpectedTypeException($userExistsResult, UserExistsResult::class);
+        }
+        
         dd(
-            $this->userRepository->exists($email)
+            $userExistsResult->exists()
         );
     }
     
     public function store(UserRequest $userRequest): void
     {
-        dd(
-            $this->userRepository->store(
+        $this->commandBus->dispatch(
+            new StoreUserCommand(
                 new UserDto(
                     $userRequest->resolveStringValue(UserRequest::KEY_NAME),
                     $userRequest->resolveStringValue(UserRequest::KEY_EMAIL),
@@ -59,6 +103,10 @@ class UserController
                     )
                 )
             )
+        );
+        
+        dd(
+            'User store prepared in queue.'
         );
     }
     
