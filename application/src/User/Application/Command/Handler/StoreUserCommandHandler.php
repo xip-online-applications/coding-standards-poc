@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace XIP\User\Application\Command;
+namespace XIP\User\Application\Command\Handler;
 
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use XIP\Shared\Application\Command\CommandHandlerInterface;
 use XIP\Shared\Application\Command\CommandInterface;
+use XIP\User\Application\Command\StoreUserCommand;
 use XIP\User\Application\Event\UserStoredEvent;
 
 class StoreUserCommandHandler extends AbstractUserCommandHandler implements CommandHandlerInterface

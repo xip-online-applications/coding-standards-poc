@@ -11,11 +11,11 @@ use XIP\Shared\Application\Bus\QueryBusInterface;
 use XIP\User\Application\Command\StoreUserCommand;
 use XIP\User\Application\Query\FindUserByEmailQuery;
 use XIP\User\Application\Query\FindUserQuery;
-use XIP\User\Application\Query\UserExistsQuery;
-use XIP\User\Application\Query\UserExistsResult;
-use XIP\User\Application\Query\UserResult;
 use XIP\User\Application\Query\FindUsersQuery;
-use XIP\User\Application\Query\UsersResult;
+use XIP\User\Application\Query\Result\UserExistsResult;
+use XIP\User\Application\Query\Result\UserResult;
+use XIP\User\Application\Query\Result\UsersResult;
+use XIP\User\Application\Query\UserExistsQuery;
 use XIP\User\Domain\DataTransferObject\User as UserDto;
 use XIP\User\Infrastructure\Repository\UserRepositoryInterface;
 

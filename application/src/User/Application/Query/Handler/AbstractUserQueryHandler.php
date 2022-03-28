@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace XIP\User\Application\Query;
+namespace XIP\User\Application\Query\Handler;
 
 use XIP\User\Infrastructure\Repository\UserRepositoryInterface;
 

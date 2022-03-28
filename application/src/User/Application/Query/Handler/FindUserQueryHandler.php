@@ -2,18 +2,20 @@
 
 declare(strict_types=1);
 
-namespace XIP\User\Application\Query;
+namespace XIP\User\Application\Query\Handler;
 
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use XIP\Shared\Application\Query\QueryHandlerInterface;
 use XIP\Shared\Application\Query\QueryInterface;
 use XIP\Shared\Application\Query\QueryResultInterface;
+use XIP\User\Application\Query\FindUserQuery;
+use XIP\User\Application\Query\Result\UserResult;
 
-class FindUserByEmailQueryHandler extends AbstractUserQueryHandler implements QueryHandlerInterface
+class FindUserQueryHandler extends AbstractUserQueryHandler implements QueryHandlerInterface
 {
     public static function getHandledMessages(): iterable
     {
-        yield FindUserByEmailQuery::class => [
+        yield FindUserQuery::class => [
             'method' => 'handle',
             'from_transport' => 'queries_transport',
             'bus' => 'queries.bus',
@@ -22,12 +24,12 @@ class FindUserByEmailQueryHandler extends AbstractUserQueryHandler implements Qu
 
     public function handle(QueryInterface $query): QueryResultInterface
     {
-        if (!$query instanceof FindUserByEmailQuery) {
-            throw new UnexpectedTypeException($query, FindUserByEmailQuery::class);
+        if (!$query instanceof FindUserQuery) {
+            throw new UnexpectedTypeException($query, FindUserQuery::class);
         }
         
         return new UserResult(
-            $this->userRepository->findOrFailByEmail($query->getEmail())
+            $this->userRepository->findOrFailById($query->getId())
         );
     }
 }
