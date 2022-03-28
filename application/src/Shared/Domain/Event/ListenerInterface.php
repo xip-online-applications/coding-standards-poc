@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace XIP\Shared\Application\Event;
+namespace XIP\Shared\Domain\Event;
 
 use Symfony\Component\Messenger\Handler\MessageSubscriberInterface;
 

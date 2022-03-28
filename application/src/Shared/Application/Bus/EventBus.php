@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace XIP\Shared\Application\Bus;
 
 use Symfony\Component\Messenger\MessageBusInterface;
-use XIP\Shared\Application\Event\EventInterface;
+use XIP\Shared\Domain\Bus\EventBusInterface;
+use XIP\Shared\Domain\Event\EventInterface;
 
 class EventBus implements EventBusInterface
 {

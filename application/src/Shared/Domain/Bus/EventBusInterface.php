@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace XIP\Shared\Application\Bus;
+namespace XIP\Shared\Domain\Bus;
 
-use XIP\Shared\Application\Event\EventInterface;
+use XIP\Shared\Domain\Event\EventInterface;
 
 interface EventBusInterface
 {

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace XIP\User\Application\Command\Handler;
 
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
-use XIP\Shared\Application\Command\CommandHandlerInterface;
-use XIP\Shared\Application\Command\CommandInterface;
+use XIP\Shared\Domain\Command\CommandHandlerInterface;
+use XIP\Shared\Domain\Command\CommandInterface;
 use XIP\User\Application\Command\UpdateUserCommand;
 use XIP\User\Application\Event\UserUpdatedEvent;
 

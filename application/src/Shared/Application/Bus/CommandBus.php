@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace XIP\Shared\Application\Bus;
 
 use Symfony\Component\Messenger\MessageBusInterface;
-use XIP\Shared\Application\Command\CommandInterface;
+use XIP\Shared\Domain\Bus\CommandBusInterface;
+use XIP\Shared\Domain\Command\CommandInterface;
 
 class CommandBus implements CommandBusInterface
 {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace XIP\User\Application\Event;
 
-use XIP\Shared\Application\Event\EventInterface;
+use XIP\Shared\Domain\Event\EventInterface;
 use XIP\User\Domain\Model\User;
 
 class UserStoredEvent implements EventInterface

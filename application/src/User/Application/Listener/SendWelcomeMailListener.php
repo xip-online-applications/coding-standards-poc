@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace XIP\User\Application\Listener;
 
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
-use XIP\Shared\Application\Event\EventInterface;
-use XIP\Shared\Application\Event\ListenerInterface;
+use XIP\Shared\Domain\Event\EventInterface;
+use XIP\Shared\Domain\Event\ListenerInterface;
 use XIP\User\Application\Event\UserStoredEvent;
 
 class SendWelcomeMailListener implements ListenerInterface

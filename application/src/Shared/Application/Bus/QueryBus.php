@@ -6,8 +6,9 @@ namespace XIP\Shared\Application\Bus;
 
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
-use XIP\Shared\Application\Query\QueryInterface;
-use XIP\Shared\Application\Query\QueryResultInterface;
+use XIP\Shared\Domain\Bus\QueryBusInterface;
+use XIP\Shared\Domain\Query\QueryInterface;
+use XIP\Shared\Domain\Query\QueryResultInterface;
 
 class QueryBus implements QueryBusInterface
 {

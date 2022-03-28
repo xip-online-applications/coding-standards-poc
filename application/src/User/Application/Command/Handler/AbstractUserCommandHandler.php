@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace XIP\User\Application\Command\Handler;
 
-use XIP\Shared\Application\Bus\EventBusInterface;
+use XIP\Shared\Domain\Bus\EventBusInterface;
 use XIP\User\Infrastructure\Repository\UserRepositoryInterface;
 
 abstract class AbstractUserCommandHandler

@@ -6,8 +6,8 @@ namespace XIP\App\Infrastructure\Http\Web\Controller;
 
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use XIP\App\Infrastructure\Http\Web\Request\UserRequest;
-use XIP\Shared\Application\Bus\CommandBusInterface;
-use XIP\Shared\Application\Bus\QueryBusInterface;
+use XIP\Shared\Domain\Bus\CommandBusInterface;
+use XIP\Shared\Domain\Bus\QueryBusInterface;
 use XIP\User\Application\Command\StoreUserCommand;
 use XIP\User\Application\Query\FindUserByEmailQuery;
 use XIP\User\Application\Query\FindUserQuery;

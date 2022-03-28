@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace XIP\User\Application\Query\Handler;
 
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
-use XIP\Shared\Application\Query\QueryHandlerInterface;
-use XIP\Shared\Application\Query\QueryInterface;
-use XIP\Shared\Application\Query\QueryResultInterface;
+use XIP\Shared\Domain\Query\QueryHandlerInterface;
+use XIP\Shared\Domain\Query\QueryInterface;
+use XIP\Shared\Domain\Query\QueryResultInterface;
 use XIP\User\Application\Query\FindUserByEmailQuery;
 use XIP\User\Application\Query\Result\UserResult;
 

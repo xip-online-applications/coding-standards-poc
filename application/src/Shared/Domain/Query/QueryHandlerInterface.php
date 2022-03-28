@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace XIP\Shared\Application\Query;
+namespace XIP\Shared\Domain\Query;
 
 use Symfony\Component\Messenger\Handler\MessageSubscriberInterface;
 
