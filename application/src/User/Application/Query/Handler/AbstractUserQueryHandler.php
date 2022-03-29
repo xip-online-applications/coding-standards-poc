@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace XIP\User\Application\Query\Handler;
 
-use XIP\User\Infrastructure\Repository\UserRepositoryInterface;
+use XIP\User\Domain\Repository\UserRepositoryInterface;
 
 abstract class AbstractUserQueryHandler
 {

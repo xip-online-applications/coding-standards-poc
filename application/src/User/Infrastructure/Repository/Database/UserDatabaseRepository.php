@@ -11,8 +11,8 @@ use XIP\Shared\Infrastructure\Repository\AbstractDatabaseRepository;
 use XIP\User\Domain\DataTransferObject\User as UserDTO;
 use XIP\User\Domain\Model\Role;
 use XIP\User\Domain\Model\User;
-use XIP\User\Infrastructure\Repository\RoleRepositoryInterface;
-use XIP\User\Infrastructure\Repository\UserRepositoryInterface;
+use XIP\User\Domain\Repository\RoleRepositoryInterface;
+use XIP\User\Domain\Repository\UserRepositoryInterface;
 
 class UserDatabaseRepository extends AbstractDatabaseRepository implements UserRepositoryInterface
 {

@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
-use XIP\User\Infrastructure\Repository\UserRepositoryInterface;
+use XIP\User\Domain\Repository\UserRepositoryInterface;
 
 class EmailUniqueValidator extends ConstraintValidator
 {

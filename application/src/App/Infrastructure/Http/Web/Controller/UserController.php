@@ -17,7 +17,7 @@ use XIP\User\Application\Query\Result\UserResult;
 use XIP\User\Application\Query\Result\UsersResult;
 use XIP\User\Application\Query\UserExistsQuery;
 use XIP\User\Domain\DataTransferObject\User as UserDto;
-use XIP\User\Infrastructure\Repository\UserRepositoryInterface;
+use XIP\User\Domain\Repository\UserRepositoryInterface;
 
 class UserController
 {

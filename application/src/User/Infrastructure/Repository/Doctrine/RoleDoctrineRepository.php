@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace XIP\User\Infrastructure\Repository\Doctrine;
 
 use XIP\User\Domain\Model\Role;
+use XIP\User\Domain\Repository\RoleRepositoryInterface;
 use XIP\User\Infrastructure\Repository\Doctrine\Entity\Role as RoleEntity;
 use XIP\User\Infrastructure\Repository\Doctrine\Repository\RoleRepository as RoleEntityRepository;
-use XIP\User\Infrastructure\Repository\RoleRepositoryInterface;
 
 class RoleDoctrineRepository implements RoleRepositoryInterface
 {

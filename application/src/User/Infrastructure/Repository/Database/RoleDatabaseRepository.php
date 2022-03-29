@@ -7,7 +7,7 @@ namespace XIP\User\Infrastructure\Repository\Database;
 use Doctrine\DBAL\Query\QueryBuilder;
 use XIP\Shared\Infrastructure\Repository\AbstractDatabaseRepository;
 use XIP\User\Domain\Model\Role;
-use XIP\User\Infrastructure\Repository\RoleRepositoryInterface;
+use XIP\User\Domain\Repository\RoleRepositoryInterface;
 
 class RoleDatabaseRepository extends AbstractDatabaseRepository implements RoleRepositoryInterface
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace XIP\User\Infrastructure\Repository;
+namespace XIP\User\Domain\Repository;
 
 use XIP\User\Domain\Model\Role;
 

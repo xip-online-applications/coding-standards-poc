@@ -11,11 +11,11 @@ use XIP\Shared\Domain\Exception\ModelNotFoundException;
 use XIP\User\Domain\DataTransferObject\User as UserDto;
 use XIP\User\Domain\Model\Role;
 use XIP\User\Domain\Model\User;
+use XIP\User\Domain\Repository\UserRepositoryInterface;
 use XIP\User\Infrastructure\Repository\Doctrine\Entity\Role as RoleEntity;
 use XIP\User\Infrastructure\Repository\Doctrine\Entity\User as UserEntity;
 use XIP\User\Infrastructure\Repository\Doctrine\Repository\RoleRepository as RoleEntityRepository;
 use XIP\User\Infrastructure\Repository\Doctrine\Repository\UserRepository as UserEntityRepository;
-use XIP\User\Infrastructure\Repository\UserRepositoryInterface;
 
 class UserDoctrineRepository implements UserRepositoryInterface
 {

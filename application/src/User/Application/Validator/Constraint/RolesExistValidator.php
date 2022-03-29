@@ -7,7 +7,7 @@ namespace XIP\User\Application\Validator\Constraint;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
-use XIP\User\Infrastructure\Repository\RoleRepositoryInterface;
+use XIP\User\Domain\Repository\RoleRepositoryInterface;
 
 class RolesExistValidator extends ConstraintValidator
 {
