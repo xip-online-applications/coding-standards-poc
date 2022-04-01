@@ -17,22 +17,17 @@ use XIP\User\Application\Query\Result\UserResult;
 use XIP\User\Application\Query\Result\UsersResult;
 use XIP\User\Application\Query\UserExistsQuery;
 use XIP\User\Domain\DataTransferObject\User as UserDto;
-use XIP\User\Domain\Repository\UserRepositoryInterface;
 
 class UserController
 {
-    private UserRepositoryInterface $userRepository;
-
     private QueryBusInterface $queryBus;
 
     private CommandBusInterface $commandBus;
 
     public function __construct(
-        UserRepositoryInterface $userRepository,
         QueryBusInterface $queryBus,
         CommandBusInterface $commandBus
     ) {
-        $this->userRepository = $userRepository;
         $this->queryBus = $queryBus;
         $this->commandBus = $commandBus;
     }
