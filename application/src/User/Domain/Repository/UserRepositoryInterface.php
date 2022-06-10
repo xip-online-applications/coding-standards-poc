@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace XIP\User\Domain\Repository;
 
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 use XIP\User\Domain\DataTransferObject\User as UserDto;
 use XIP\User\Domain\Model\User;
 
-interface UserRepositoryInterface
+interface UserRepositoryInterface extends UserProviderInterface
 {
     /**
      * @return array<int, User>

@@ -9,11 +9,10 @@ use XIP\User\Domain\DataTransferObject\User as UserDto;
 
 class StoreUserCommand implements CommandInterface
 {
-    private UserDto $userDto;
 
-    public function __construct(UserDto $userDto)
-    {
-        $this->userDto = $userDto;
+    public function __construct(
+        private UserDto $userDto
+    ) {
     }
 
     public function getUserDto(): UserDto

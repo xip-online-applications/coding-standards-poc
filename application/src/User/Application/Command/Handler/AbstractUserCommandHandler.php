@@ -9,13 +9,9 @@ use XIP\User\Domain\Repository\UserRepositoryInterface;
 
 abstract class AbstractUserCommandHandler
 {
-    protected UserRepositoryInterface $userRepository;
-    
-    protected EventBusInterface $eventBus;
-
-    public function __construct(UserRepositoryInterface $userRepository, EventBusInterface $eventBus)
-    {
-        $this->userRepository = $userRepository;
-        $this->eventBus = $eventBus;
+    public function __construct(
+        protected UserRepositoryInterface $userRepository,
+        protected EventBusInterface $eventBus
+    ) {
     }
 }

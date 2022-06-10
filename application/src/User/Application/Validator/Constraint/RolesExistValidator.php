@@ -11,11 +11,9 @@ use XIP\User\Domain\Repository\RoleRepositoryInterface;
 
 class RolesExistValidator extends ConstraintValidator
 {
-    private RoleRepositoryInterface $roleRepository;
-
-    public function __construct(RoleRepositoryInterface $roleRepository)
-    {
-        $this->roleRepository = $roleRepository;
+    public function __construct(
+        private RoleRepositoryInterface $roleRepository
+    ) {
     }
 
     public function validate(mixed $value, Constraint $constraint): void

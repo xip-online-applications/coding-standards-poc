@@ -8,11 +8,9 @@ use XIP\Shared\Domain\Query\QueryInterface;
 
 class FindUserByEmailQuery implements QueryInterface
 {
-    private string $email;
-
-    public function __construct(string $email)
-    {
-        $this->email = $email;
+    public function __construct(
+        private string $email
+    ) {
     }
 
     public function getEmail(): string

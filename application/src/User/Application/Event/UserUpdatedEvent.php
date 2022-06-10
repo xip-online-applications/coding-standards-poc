@@ -9,14 +9,10 @@ use XIP\User\Domain\Model\User;
 
 class UserUpdatedEvent implements EventInterface
 {
-    private User $oldUser;
-    
-    private User $updatedUser;
-
-    public function __construct(User $oldUser, User $updatedUser)
-    {
-        $this->oldUser = $oldUser;
-        $this->updatedUser = $updatedUser;
+    public function __construct(
+        private User $oldUser,
+        private User $updatedUser
+    ) {
     }
 
     public function getOldUser(): User

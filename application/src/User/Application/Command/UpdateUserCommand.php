@@ -10,13 +10,10 @@ use XIP\User\Domain\Model\User;
 
 class UpdateUserCommand implements CommandInterface
 {
-    private UserDto $userDto;
-    private User $user;
-
-    public function __construct(UserDto $userDto, User $user)
-    {
-        $this->userDto = $userDto;
-        $this->user = $user;
+    public function __construct(
+        private UserDto $userDto,
+        private User $user
+    ) {
     }
 
     public function getUserDto(): UserDto

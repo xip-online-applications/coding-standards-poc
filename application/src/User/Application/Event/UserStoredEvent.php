@@ -9,11 +9,9 @@ use XIP\User\Domain\Model\User;
 
 class UserStoredEvent implements EventInterface
 {
-    private User $user;
-
-    public function __construct(User $user)
-    {
-        $this->user = $user;
+    public function __construct(
+        private User $user
+    ) {
     }
 
     public function getUser(): User

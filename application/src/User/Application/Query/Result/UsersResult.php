@@ -9,15 +9,12 @@ use XIP\User\Domain\Model\User;
 
 class UsersResult implements QueryResultInterface
 {
-    /** @var User[] */
-    private array $users;
-
     /**
      * @param User[] $users
      */
-    public function __construct(array $users)
-    {
-        $this->users = $users;
+    public function __construct(
+        private array $users
+    ) {
     }
 
     /**

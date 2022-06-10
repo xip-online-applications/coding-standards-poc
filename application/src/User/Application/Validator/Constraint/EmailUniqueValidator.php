@@ -12,13 +12,10 @@ use XIP\User\Domain\Repository\UserRepositoryInterface;
 
 class EmailUniqueValidator extends ConstraintValidator
 {
-    private UserRepositoryInterface $userRepository;
-    private RequestStack $requestStack;
-
-    public function __construct(UserRepositoryInterface $userRepository, RequestStack $requestStack)
-    {
-        $this->userRepository = $userRepository;
-        $this->requestStack = $requestStack;
+    public function __construct(
+        private UserRepositoryInterface $userRepository,
+        private RequestStack $requestStack
+    ) {
     }
 
     public function validate(mixed $value, Constraint $constraint): void

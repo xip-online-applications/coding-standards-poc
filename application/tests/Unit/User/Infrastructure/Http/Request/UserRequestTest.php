@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\App\Infrastructure\Http\Web\Request;
+namespace App\Tests\Unit\User\Infrastructure\Http\Request;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -15,13 +15,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use XIP\App\Infrastructure\Http\Web\Request\UserRequest;
 use XIP\Shared\Infrastructure\Http\Request\AbstractRequest;
 use XIP\User\Application\Validator\Constraint\EmailUnique;
 use XIP\User\Application\Validator\Constraint\RolesExist;
+use XIP\User\Infrastructure\Http\Request\UserRequest;
 
 /**
- * @covers \XIP\App\Infrastructure\Http\Web\Request\UserRequest
+ * @covers \XIP\User\Infrastructure\Http\Request\UserRequest
  */
 class UserRequestTest extends TestCase
 {
@@ -39,7 +39,7 @@ class UserRequestTest extends TestCase
     }
 
     /**
-     * @covers \XIP\App\Infrastructure\Http\Web\Request\UserRequest
+     * @covers \XIP\User\Infrastructure\Http\Request\UserRequest
      */
     public function testInstance(): void
     {
@@ -47,7 +47,7 @@ class UserRequestTest extends TestCase
     }
 
     /**
-     * @covers \XIP\App\Infrastructure\Http\Web\Request\UserRequest::constraints
+     * @covers \XIP\User\Infrastructure\Http\Request\UserRequest::constraints
      */
     public function testConstraints(): void
     {
@@ -82,7 +82,7 @@ class UserRequestTest extends TestCase
     }
 
     /**
-     * @covers \XIP\App\Infrastructure\Http\Web\Request\UserRequest::constraints
+     * @covers \XIP\User\Infrastructure\Http\Request\UserRequest::constraints
      */
     public function testConstraintsWithUserId(): void
     {
@@ -128,7 +128,7 @@ class UserRequestTest extends TestCase
     }
 
     /**
-     * @covers \XIP\App\Infrastructure\Http\Web\Request\UserRequest::validationData
+     * @covers \XIP\User\Infrastructure\Http\Request\UserRequest::validationData
      */
     public function testValidationData(): void
     {

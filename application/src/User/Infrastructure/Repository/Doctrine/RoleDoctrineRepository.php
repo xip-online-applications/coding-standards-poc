@@ -11,11 +11,8 @@ use XIP\User\Infrastructure\Repository\Doctrine\Repository\RoleRepository as Rol
 
 class RoleDoctrineRepository implements RoleRepositoryInterface
 {
-    private RoleEntityRepository $roleEntityRepository;
-
-    public function __construct(RoleEntityRepository $roleEntityRepository)
+    public function __construct(private RoleEntityRepository $roleEntityRepository)
     {
-        $this->roleEntityRepository = $roleEntityRepository;
     }
     
     /**
@@ -25,7 +22,7 @@ class RoleDoctrineRepository implements RoleRepositoryInterface
     {
         $roles = $this->roleEntityRepository->createQueryBuilder('role')
             ->indexBy('role', 'role.id')
-            ->innerJoin('role.users',  'user')
+            ->innerJoin('role.users', 'user')
             ->where('user.id = :userId')
             ->setParameter('userId', $userId)
             ->getQuery()
@@ -41,7 +38,7 @@ class RoleDoctrineRepository implements RoleRepositoryInterface
             ->where('role.id in (:ids)')
             ->setParameter('ids', $ids)
             ->getQuery()
-            ->getSingleScalarResult();   
+            ->getSingleScalarResult();
         
         return $count === count($ids);
     }

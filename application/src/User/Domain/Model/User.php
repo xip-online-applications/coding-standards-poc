@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace XIP\User\Domain\Model;
 
-final class User
+use Symfony\Component\Security\Core\User\UserInterface;
+
+final class User implements UserInterface
 {
     public function __construct(
         private readonly int $id,
@@ -41,5 +43,15 @@ final class User
     public function getRoles(): array
     {
         return $this->roles;
+    }
+
+    public function eraseCredentials()
+    {
+        throw new \RuntimeException('Credentials can only be erased through the oAuth provider.');
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->getEmail();
     }
 }

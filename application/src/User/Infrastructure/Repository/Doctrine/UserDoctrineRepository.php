@@ -7,6 +7,9 @@ namespace XIP\User\Infrastructure\Repository\Doctrine;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
+use Symfony\Component\Security\Core\User\UserInterface;
 use XIP\Shared\Domain\Exception\ModelNotFoundException;
 use XIP\User\Domain\DataTransferObject\User as UserDto;
 use XIP\User\Domain\Model\Role;
@@ -19,16 +22,12 @@ use XIP\User\Infrastructure\Repository\Doctrine\Repository\UserRepository as Use
 
 class UserDoctrineRepository implements UserRepositoryInterface
 {
-    private UserEntityRepository $userEntityRepository;
-    
-    private RoleEntityRepository $roleEntityRepository;
-    
     private ?EntityManagerInterface $entityManager = null;
 
-    public function __construct(UserEntityRepository $userEntityRepository, RoleEntityRepository $roleEntityRepository)
-    {
-        $this->userEntityRepository = $userEntityRepository;
-        $this->roleEntityRepository = $roleEntityRepository;
+    public function __construct(
+        private UserEntityRepository $userEntityRepository,
+        private RoleEntityRepository $roleEntityRepository
+    ) {
     }
 
     public function findAll(): array
@@ -216,5 +215,20 @@ class UserDoctrineRepository implements UserRepositoryInterface
             $roleEntity->getId(),
             $roleEntity->getName()
         );
+    }
+
+    public function refreshUser(UserInterface $user): void
+    {
+        throw new \RuntimeException('Refresh of a user is being dealt by the oAuth provider.');
+    }
+
+    public function supportsClass(string $class): bool
+    {
+        return User::class === $class;
+    }
+
+    public function loadUserByIdentifier(string $identifier): UserInterface
+    {
+        return $this->findByEmail($identifier);
     }
 }

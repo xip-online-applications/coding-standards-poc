@@ -8,11 +8,9 @@ use XIP\Shared\Domain\Query\QueryResultInterface;
 
 class UserExistsResult implements QueryResultInterface
 {
-    private bool $exists;
-
-    public function __construct(bool $exists)
-    {
-        $this->exists = $exists;
+    public function __construct(
+        private bool $exists
+    ) {
     }
 
     public function exists(): bool

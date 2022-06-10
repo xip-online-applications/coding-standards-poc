@@ -1,0 +1,22 @@
+security:
+    enable_authenticator_manager: true
+
+    providers:
+        users:
+            entity:
+                class: XIP\User\Domain\Model\User
+        xip_user_provider:
+            id: XIP\User\Infrastructure\Repository\Database\UserDatabaseRepository
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            custom_authenticators:
+                - XIP\App\Application\Security\JwtAuthenticator
+            lazy: true
+            stateless: true
+            provider: xip_user_provider
+
+    access_control:
+         - { path: ^/, roles: ROLE_ADMIN }

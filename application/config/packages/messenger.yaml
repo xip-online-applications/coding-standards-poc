@@ -19,6 +19,7 @@ framework:
                         command_queue: ~
                 retry_strategy:
                     delay: 3000
+            commands_sync_transporter: 'sync://'
             events_transport:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
                 options:

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace XIP\App\Infrastructure\Http\Web\Controller;
 
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
-use XIP\App\Infrastructure\Http\Web\Request\UserRequest;
 use XIP\Shared\Domain\Bus\CommandBusInterface;
 use XIP\Shared\Domain\Bus\QueryBusInterface;
 use XIP\User\Application\Command\StoreUserCommand;
@@ -17,6 +16,7 @@ use XIP\User\Application\Query\Result\UserResult;
 use XIP\User\Application\Query\Result\UsersResult;
 use XIP\User\Application\Query\UserExistsQuery;
 use XIP\User\Domain\DataTransferObject\User as UserDto;
+use XIP\User\Infrastructure\Http\Request\UserRequest;
 
 class UserController
 {
@@ -89,13 +89,10 @@ class UserController
         $this->commandBus->dispatch(
             new StoreUserCommand(
                 new UserDto(
-                    $userRequest->resolveStringValue(UserRequest::KEY_NAME),
-                    $userRequest->resolveStringValue(UserRequest::KEY_EMAIL),
-                    null,
-                    array_map(
-                        static fn(string $number): int => (int)$number,
-                        $userRequest->resolveArrayValue(UserRequest::KEY_ROLES)
-                    )
+                    $userRequest->getName(),
+                    $userRequest->getEmail(),
+                    $userRequest->getPassword(),
+                    $userRequest->getRoles()
                 )
             )
         );
@@ -112,13 +109,10 @@ class UserController
         dd(
             $this->userRepository->update(
                 new UserDto(
-                    $userRequest->resolveStringValue(UserRequest::KEY_NAME),
-                    $userRequest->resolveStringValue(UserRequest::KEY_EMAIL),
-                    $userRequest->resolveStringValue(UserRequest::KEY_PASSWORD),
-                    array_map(
-                        static fn(string $number): int => (int)$number,
-                        $userRequest->resolveArrayValue(UserRequest::KEY_ROLES)
-                    )
+                    $userRequest->getName(),
+                    $userRequest->getEmail(),
+                    $userRequest->getPassword(),
+                    $userRequest->getRoles()
                 ),
                 $user
             )

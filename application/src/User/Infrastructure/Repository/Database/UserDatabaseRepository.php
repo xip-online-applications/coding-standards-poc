@@ -6,6 +6,9 @@ namespace XIP\User\Infrastructure\Repository\Database;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
+use Symfony\Component\Security\Core\User\UserInterface;
 use XIP\Shared\Domain\Exception\ModelNotFoundException;
 use XIP\Shared\Infrastructure\Repository\AbstractDatabaseRepository;
 use XIP\User\Domain\DataTransferObject\User as UserDTO;
@@ -16,18 +19,14 @@ use XIP\User\Domain\Repository\UserRepositoryInterface;
 
 class UserDatabaseRepository extends AbstractDatabaseRepository implements UserRepositoryInterface
 {
-    private RoleRepositoryInterface $roleRepository;
-    
     private array $users = [];
 
     public function __construct(
         Connection $connection,
         string $databaseDateTimeFormat,
-        RoleRepositoryInterface $roleRepository
+        private RoleRepositoryInterface $roleRepository
     ) {
         parent::__construct($connection, $databaseDateTimeFormat);
-
-        $this->roleRepository = $roleRepository;
     }
 
     /**
@@ -72,9 +71,7 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
             return null;
         }
 
-        $this->users[$id] = $this->hydrate($userInfo);
-        
-        return $this->users[$id];
+        return $this->hydrate($userInfo);
     }
 
     public function findOrFailById(int $id): User
@@ -109,11 +106,11 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
     {
          $user = $this->findByEmail($email);
 
-         if (null === $user) {
-             throw new ModelNotFoundException(
-                 sprintf('User with email %s was not found in the database', $email)
-             );
-         }
+        if (null === $user) {
+            throw new ModelNotFoundException(
+                sprintf('User with email %s was not found in the database', $email)
+            );
+        }
 
          return $user;
     }
@@ -165,6 +162,10 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
 
     public function update(UserDTO $userDto, User $user): User
     {
+        if (array_key_exists($user->getId(), $this->users)) {
+            unset($this->users[$user->getId()]);
+        }
+        
         $this->createQueryBuilder()
             ->update(UserTable::NAME)
             ->where($this->whereIdEquals())
@@ -188,6 +189,10 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
 
     public function delete(User $user): void
     {
+        if (array_key_exists($user->getId(), $this->users)) {
+            unset($this->users[$user->getId()]);
+        }
+        
         $this->createQueryBuilder()
             ->delete(UserTable::NAME)
             ->where($this->whereIdEquals())
@@ -277,13 +282,15 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
     {
         $userId = (int)$userInfo[UserTable::COLUMN_ID];
 
-        return new User(
+        $this->users[$userId] =  new User(
             $userId,
             (string)$userInfo[UserTable::COLUMN_NAME],
             (string)$userInfo[UserTable::COLUMN_EMAIL],
             (string)$userInfo[UserTable::COLUMN_PASSWORD],
             $this->roleRepository->findByUserId($userId),
         );
+        
+        return $this->users[$userId];
     }
 
     /**
@@ -295,5 +302,20 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
         $userInfos = $this->keyBy('id', $userInfos);
         
         return array_map([$this, 'hydrate'], $userInfos);
+    }
+
+    public function refreshUser(UserInterface $user): void
+    {
+        throw new \RuntimeException('Refresh of a user is being dealt by the oAuth provider.');
+    }
+
+    public function supportsClass(string $class): bool
+    {
+        return User::class === $class;
+    }
+
+    public function loadUserByIdentifier(string $identifier): UserInterface
+    {
+        return $this->findByEmail($identifier);
     }
 }

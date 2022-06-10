@@ -11,7 +11,6 @@ use XIP\User\Application\Event\UserStoredEvent;
 
 class RegisterIpListener implements ListenerInterface
 {
-
     public function handle(EventInterface $event): void
     {
         if (!$event instanceof UserStoredEvent) {

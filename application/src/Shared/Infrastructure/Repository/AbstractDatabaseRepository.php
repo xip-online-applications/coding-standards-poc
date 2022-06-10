@@ -9,14 +9,10 @@ use Doctrine\DBAL\Query\QueryBuilder;
 
 abstract class AbstractDatabaseRepository
 {
-    protected Connection $connection;
-
-    protected string $databaseDateTimeFormat;
-
-    public function __construct(Connection $connection, string $databaseDateTimeFormat)
-    {
-        $this->connection = $connection;
-        $this->databaseDateTimeFormat = $databaseDateTimeFormat;
+    public function __construct(
+        protected Connection $connection,
+        protected string $databaseDateTimeFormat
+    ) {
     }
 
     protected function createQueryBuilder(): QueryBuilder
