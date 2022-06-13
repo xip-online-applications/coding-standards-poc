@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\User\Infrastructure\Http\Request;
+namespace XIP\Tests\Unit\User\Infrastructure\Http\Request;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

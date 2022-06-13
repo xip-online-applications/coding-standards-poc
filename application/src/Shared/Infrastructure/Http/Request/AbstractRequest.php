@@ -28,7 +28,7 @@ abstract class AbstractRequest
      */
     abstract public function validationData(): array;
 
-    public function validate(): void
+    final public function validate(): void
     {
         $constraintViolationList = $this->validator->validate(
             $this->validationData(),
@@ -40,7 +40,7 @@ abstract class AbstractRequest
         }
     }
 
-    public function resolveStringOrNullValue(string $key): ?string
+    final protected function resolveStringOrNullValue(string $key): ?string
     {
         $value = $this->resolveValue($key);
 
@@ -51,12 +51,12 @@ abstract class AbstractRequest
         return (string)$value;
     }
 
-    public function resolveStringValue(string $key): string
+    final protected function resolveStringValue(string $key): string
     {
         return (string)$this->resolveStringOrNullValue($key);
     }
 
-    public function resolveIntOrNullValue(string $key): ?int
+    final protected function resolveIntOrNullValue(string $key): ?int
     {
         $value = $this->resolveValue($key);
 
@@ -67,12 +67,12 @@ abstract class AbstractRequest
         return (int)$value;
     }
 
-    public function resolveIntValue(string $key): int
+    final protected function resolveIntValue(string $key): int
     {
         return (int)$this->resolveIntOrNullValue($key);
     }
 
-    public function resolveFloatOrNullValue(string $key): ?float
+    final protected function resolveFloatOrNullValue(string $key): ?float
     {
         $value = $this->resolveValue($key);
 
@@ -83,12 +83,12 @@ abstract class AbstractRequest
         return (float)$value;
     }
 
-    public function resolveFloatValue(string $key): float
+    final protected function resolveFloatValue(string $key): float
     {
         return (float)$this->resolveFloatOrNullValue($key);
     }
 
-    public function resolveBooleanOrNullValue(string $key): ?bool
+    final protected function resolveBooleanOrNullValue(string $key): ?bool
     {
         $value = $this->resolveValue($key);
 
@@ -99,12 +99,12 @@ abstract class AbstractRequest
         return (bool)$value;
     }
 
-    public function resolveBooleanValue(string $key): bool
+    final protected function resolveBooleanValue(string $key): bool
     {
         return (bool)$this->resolveBooleanOrNullValue($key);
     }
 
-    public function resolveArrayOrNullValue(string $key): ?array
+    final protected function resolveArrayOrNullValue(string $key): ?array
     {
         $value = $this->resolveValue($key);
 
@@ -115,7 +115,7 @@ abstract class AbstractRequest
         return (array)$value;
     }
     
-    public function resolveArrayValue(string $key): array
+    final protected function resolveArrayValue(string $key): array
     {
         $value = $this->resolveArrayOrNullValue($key);
         

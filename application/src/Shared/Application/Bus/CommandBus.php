@@ -10,11 +10,9 @@ use XIP\Shared\Domain\Command\CommandInterface;
 
 class CommandBus implements CommandBusInterface
 {
-    private MessageBusInterface $messageCommandBus;
-
-    public function __construct(MessageBusInterface $messageCommandBus)
-    {
-        $this->messageCommandBus = $messageCommandBus;
+    public function __construct(
+        private MessageBusInterface $messageCommandBus
+    ) {
     }
 
     public function dispatch(CommandInterface $command): void

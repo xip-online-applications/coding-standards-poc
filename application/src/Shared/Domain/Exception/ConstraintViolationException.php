@@ -9,12 +9,9 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class ConstraintViolationException extends RuntimeException
 {
-    private ConstraintViolationListInterface $constraintViolationList;
-
-    private function __construct(ConstraintViolationListInterface $constraintViolationList)
-    {
-        $this->constraintViolationList = $constraintViolationList;
-
+    private function __construct(
+        private ConstraintViolationListInterface $constraintViolationList
+    ) {
         parent::__construct();
     }
 

@@ -12,11 +12,9 @@ use XIP\Shared\Domain\Query\QueryResultInterface;
 
 class QueryBus implements QueryBusInterface
 {
-    private MessageBusInterface $messageQueryBus;
-
-    public function __construct(MessageBusInterface $messageQueryBus)
-    {
-        $this->messageQueryBus = $messageQueryBus;
+    public function __construct(
+        private MessageBusInterface $messageQueryBus
+    ) {
     }
 
     public function query(QueryInterface $query): QueryResultInterface

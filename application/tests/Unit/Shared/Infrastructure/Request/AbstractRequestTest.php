@@ -87,7 +87,7 @@ class AbstractRequestTest extends TestCase
         return [
             'A string value with the right key' => [
                 'expectedValue' => 'string',
-                'key' => 'key',
+                'key' => 'name',
                 'value' => 'string',
             ],
             'No key sey' => [
@@ -97,7 +97,7 @@ class AbstractRequestTest extends TestCase
             ],
             'A null value for a key' => [
                 'expectedValue' => null,
-                'key' => 'key',
+                'key' => 'name',
                 'value' => null,
             ]
         ];
@@ -116,10 +116,31 @@ class AbstractRequestTest extends TestCase
         $this->requestStackMock->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($request);
-        $abstractRequest = $this->getAbstractRequest();
+        $abstractRequest = new class($this->requestStackMock, $this->validatorMock) extends AbstractRequest {
+            private const KEY_NAME = 'name';
+
+            public function constraints(): array
+            {
+                return [
+                    self::KEY_NAME => [
+                        new NotBlank(),
+                    ],
+                ];
+            }
+
+            public function validationData(): array
+            {
+                return $this->requestStack->getCurrentRequest()->request?->all() ?? [];
+            }
+
+            public function getName(): ?string
+            {
+                return $this->resolveStringOrNullValue(self::KEY_NAME);
+            }
+        };
 
         // Execute
-        $result = $abstractRequest->resolveStringOrNullValue($key ?? 'fake');
+        $result = $abstractRequest->getName();
 
         // Validate
         $this->assertSame($expectedValue, $result);
@@ -138,10 +159,31 @@ class AbstractRequestTest extends TestCase
         $this->requestStackMock->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($request);
-        $abstractRequest = $this->getAbstractRequest();
+        $abstractRequest = new class($this->requestStackMock, $this->validatorMock) extends AbstractRequest {
+            private const KEY_NAME = 'name';
+
+            public function constraints(): array
+            {
+                return [
+                    self::KEY_NAME => [
+                        new NotBlank(),
+                    ],
+                ];
+            }
+
+            public function validationData(): array
+            {
+                return $this->requestStack->getCurrentRequest()->request?->all() ?? [];
+            }
+
+            public function getName(): string
+            {
+                return $this->resolveStringValue(self::KEY_NAME);
+            }
+        };
 
         // Execute
-        $result = $abstractRequest->resolveStringValue($key ?? 'fake');
+        $result = $abstractRequest->getName();
 
         // Validate
         $this->assertSame($expectedValue ?? '', $result);
@@ -152,7 +194,7 @@ class AbstractRequestTest extends TestCase
         return [
             'An int value with the right key' => [
                 'expectedValue' => 1,
-                'key' => 'key',
+                'key' => 'age',
                 'value' => '1',
             ],
             'No key sey' => [
@@ -162,7 +204,7 @@ class AbstractRequestTest extends TestCase
             ],
             'A null value for a key' => [
                 'expectedValue' => null,
-                'key' => 'key',
+                'key' => 'age',
                 'value' => null,
             ]
         ];
@@ -181,10 +223,31 @@ class AbstractRequestTest extends TestCase
         $this->requestStackMock->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($request);
-        $abstractRequest = $this->getAbstractRequest();
+        $abstractRequest = new class($this->requestStackMock, $this->validatorMock) extends AbstractRequest {
+            private const KEY_AGE = 'age';
+
+            public function constraints(): array
+            {
+                return [
+                    self::KEY_AGE => [
+                        new NotBlank(),
+                    ],
+                ];
+            }
+
+            public function validationData(): array
+            {
+                return $this->requestStack->getCurrentRequest()->request?->all() ?? [];
+            }
+
+            public function getAge(): ?int
+            {
+                return $this->resolveIntOrNullValue(self::KEY_AGE);
+            }
+        };
 
         // Execute
-        $result = $abstractRequest->resolveIntOrNullValue($key ?? 'fake');
+        $result = $abstractRequest->getAge();
 
         // Validate
         $this->assertSame($expectedValue, $result);
@@ -203,10 +266,31 @@ class AbstractRequestTest extends TestCase
         $this->requestStackMock->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($request);
-        $abstractRequest = $this->getAbstractRequest();
+        $abstractRequest = new class($this->requestStackMock, $this->validatorMock) extends AbstractRequest {
+            private const KEY_AGE = 'age';
+
+            public function constraints(): array
+            {
+                return [
+                    self::KEY_AGE => [
+                        new NotBlank(),
+                    ],
+                ];
+            }
+
+            public function validationData(): array
+            {
+                return $this->requestStack->getCurrentRequest()->request?->all() ?? [];
+            }
+
+            public function getAge(): int
+            {
+                return $this->resolveIntValue(self::KEY_AGE);
+            }
+        };
 
         // Execute
-        $result = $abstractRequest->resolveIntValue($key ?? 'fake');
+        $result = $abstractRequest->getAge();
 
         // Validate
         $this->assertSame($expectedValue ?? 0, $result);
@@ -217,12 +301,12 @@ class AbstractRequestTest extends TestCase
         return [
             'An int value with the right key' => [
                 'expectedValue' => 1.00,
-                'key' => 'key',
+                'key' => 'price',
                 'value' => '1',
             ],
             'An float value with the right key' => [
                 'expectedValue' => 1.00,
-                'key' => 'key',
+                'key' => 'price',
                 'value' => '1.00',
             ],
             'No key sey' => [
@@ -232,7 +316,7 @@ class AbstractRequestTest extends TestCase
             ],
             'A null value for a key' => [
                 'expectedValue' => null,
-                'key' => 'key',
+                'key' => 'price',
                 'value' => null,
             ]
         ];
@@ -251,10 +335,31 @@ class AbstractRequestTest extends TestCase
         $this->requestStackMock->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($request);
-        $abstractRequest = $this->getAbstractRequest();
+        $abstractRequest = new class($this->requestStackMock, $this->validatorMock) extends AbstractRequest {
+            private const KEY_PRICE = 'price';
+
+            public function constraints(): array
+            {
+                return [
+                    self::KEY_PRICE => [
+                        new NotBlank(),
+                    ],
+                ];
+            }
+
+            public function validationData(): array
+            {
+                return $this->requestStack->getCurrentRequest()->request?->all() ?? [];
+            }
+
+            public function getPrice(): ?float
+            {
+                return $this->resolveFloatOrNullValue(self::KEY_PRICE);
+            }
+        };
 
         // Execute
-        $result = $abstractRequest->resolveFloatOrNullValue($key ?? 'fake');
+        $result = $abstractRequest->getPrice();
 
         // Validate
         $this->assertSame($expectedValue, $result);
@@ -273,10 +378,31 @@ class AbstractRequestTest extends TestCase
         $this->requestStackMock->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($request);
-        $abstractRequest = $this->getAbstractRequest();
+        $abstractRequest = new class($this->requestStackMock, $this->validatorMock) extends AbstractRequest {
+            private const KEY_PRICE = 'price';
+
+            public function constraints(): array
+            {
+                return [
+                    self::KEY_PRICE => [
+                        new NotBlank(),
+                    ],
+                ];
+            }
+
+            public function validationData(): array
+            {
+                return $this->requestStack->getCurrentRequest()->request?->all() ?? [];
+            }
+
+            public function getPrice(): float
+            {
+                return $this->resolveFloatValue(self::KEY_PRICE);
+            }
+        };
 
         // Execute
-        $result = $abstractRequest->resolveFloatValue($key ?? 'fake');
+        $result = $abstractRequest->getPrice();
 
         // Validate
         $this->assertSame($expectedValue ?? 0.00, $result);
@@ -287,12 +413,12 @@ class AbstractRequestTest extends TestCase
         return [
             'A true value with the right key' => [
                 'expectedValue' => true,
-                'key' => 'key',
+                'key' => 'accepted',
                 'value' => '1',
             ],
             'A false value with the right key' => [
                 'expectedValue' => false,
-                'key' => 'key',
+                'key' => 'accepted',
                 'value' => '0',
             ],
             'No key sey' => [
@@ -302,7 +428,7 @@ class AbstractRequestTest extends TestCase
             ],
             'A null value for a key' => [
                 'expectedValue' => null,
-                'key' => 'key',
+                'key' => 'accepted',
                 'value' => null,
             ]
         ];
@@ -321,10 +447,31 @@ class AbstractRequestTest extends TestCase
         $this->requestStackMock->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($request);
-        $abstractRequest = $this->getAbstractRequest();
+        $abstractRequest = new class($this->requestStackMock, $this->validatorMock) extends AbstractRequest {
+            private const KEY_ACCEPTED = 'accepted';
+
+            public function constraints(): array
+            {
+                return [
+                    self::KEY_ACCEPTED => [
+                        new NotBlank(),
+                    ],
+                ];
+            }
+
+            public function validationData(): array
+            {
+                return $this->requestStack->getCurrentRequest()->request?->all() ?? [];
+            }
+
+            public function isAccepted(): ?bool
+            {
+                return $this->resolveBooleanOrNullValue(self::KEY_ACCEPTED);
+            }
+        };
 
         // Execute
-        $result = $abstractRequest->resolveBooleanOrNullValue($key ?? 'fake');
+        $result = $abstractRequest->isAccepted();
 
         // Validate
         $this->assertSame($expectedValue, $result);
@@ -343,10 +490,31 @@ class AbstractRequestTest extends TestCase
         $this->requestStackMock->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($request);
-        $abstractRequest = $this->getAbstractRequest();
+        $abstractRequest = new class($this->requestStackMock, $this->validatorMock) extends AbstractRequest {
+            private const KEY_ACCEPTED = 'accepted';
+
+            public function constraints(): array
+            {
+                return [
+                    self::KEY_ACCEPTED => [
+                        new NotBlank(),
+                    ],
+                ];
+            }
+
+            public function validationData(): array
+            {
+                return $this->requestStack->getCurrentRequest()->request?->all() ?? [];
+            }
+
+            public function isAccepted(): bool
+            {
+                return $this->resolveBooleanValue(self::KEY_ACCEPTED);
+            }
+        };
 
         // Execute
-        $result = $abstractRequest->resolveBooleanValue($key ?? 'fake');
+        $result = $abstractRequest->isAccepted();
 
         // Validate
         $this->assertSame($expectedValue ?? false, $result);
@@ -357,12 +525,12 @@ class AbstractRequestTest extends TestCase
         return [
             'A array with the right key' => [
                 'expectedValue' => ['1', '2', '3'],
-                'key' => 'key',
+                'key' => 'userIds',
                 'value' => ['1', '2', '3'],
             ],
             'A array value with the right key' => [
                 'expectedValue' => [],
-                'key' => 'key',
+                'key' => 'userIds',
                 'value' => [],
             ],
             'No key set' => [
@@ -372,7 +540,7 @@ class AbstractRequestTest extends TestCase
             ],
             'A null value for a key' => [
                 'expectedValue' => null,
-                'key' => 'key',
+                'key' => 'userIds',
                 'value' => null,
             ]
         ];
@@ -391,10 +559,31 @@ class AbstractRequestTest extends TestCase
         $this->requestStackMock->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($request);
-        $abstractRequest = $this->getAbstractRequest();
+        $abstractRequest = new class($this->requestStackMock, $this->validatorMock) extends AbstractRequest {
+            private const KEY_USER_IDS = 'userIds';
+
+            public function constraints(): array
+            {
+                return [
+                    self::KEY_USER_IDS => [
+                        new NotBlank(),
+                    ],
+                ];
+            }
+
+            public function validationData(): array
+            {
+                return $this->requestStack->getCurrentRequest()->request?->all() ?? [];
+            }
+
+            public function getUserIds(): ?array
+            {
+                return $this->resolveArrayOrNullValue(self::KEY_USER_IDS);
+            }
+        };
 
         // Execute
-        $result = $abstractRequest->resolveArrayOrNullValue($key ?? 'fake');
+        $result = $abstractRequest->getUserIds();
 
         // Validate
         $this->assertSame($expectedValue, $result);
@@ -413,10 +602,31 @@ class AbstractRequestTest extends TestCase
         $this->requestStackMock->expects($this->once())
             ->method('getCurrentRequest')
             ->willReturn($request);
-        $abstractRequest = $this->getAbstractRequest();
+        $abstractRequest = new class($this->requestStackMock, $this->validatorMock) extends AbstractRequest {
+            private const KEY_USER_IDS = 'userIds';
+
+            public function constraints(): array
+            {
+                return [
+                    self::KEY_USER_IDS => [
+                        new NotBlank(),
+                    ],
+                ];
+            }
+
+            public function validationData(): array
+            {
+                return $this->requestStack->getCurrentRequest()->request?->all() ?? [];
+            }
+
+            public function getUserIds(): array
+            {
+                return $this->resolveArrayValue(self::KEY_USER_IDS);
+            }
+        };
 
         // Execute
-        $result = $abstractRequest->resolveArrayValue($key ?? 'fake');
+        $result = $abstractRequest->getUserIds();
 
         // Validate
         $this->assertSame($expectedValue ?? [], $result);
