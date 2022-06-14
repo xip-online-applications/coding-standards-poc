@@ -134,15 +134,112 @@ class UserRequestTest extends TestCase
     {
         // Setup
         $data = ['email' => 'patrick.batenburg@x-ip.nl'];
-        $request = new Request($data);
-        $this->requestStackMock->expects($this->once())
-            ->method('getCurrentRequest')
-            ->willReturn($request);
+        $this->mockGetCurrentRequest($data);
 
         // Execute
         $result = $this->userRequest->validationData();
 
         // Validate
         $this->assertSame($data, $result);
+    }
+
+    /**
+     * @covers \XIP\User\Infrastructure\Http\Request\UserRequest::getName
+     */
+    public function testGetName(): void
+    {
+        // Setup
+        $name = 'Patrick Batenburg';
+        $this->mockGetCurrentRequest(['name' => $name]);
+        
+        // Execute
+        $result = $this->userRequest->getName();
+        
+        // Validate
+        $this->assertSame($name, $result);
+    }
+
+    /**
+     * @covers \XIP\User\Infrastructure\Http\Request\UserRequest::getEmail
+     */
+    public function testGetEmail(): void
+    {
+        // Setup
+        $email = 'patrick.batenburg@x-ip.nl';
+        $this->mockGetCurrentRequest(['email' => $email]);
+
+        // Execute
+        $result = $this->userRequest->getEmail();
+
+        // Validate
+        $this->assertSame($email, $result);
+    }
+    
+    public function passwordScenarioProvider(): array
+    {
+        return [
+            'Default password' => [
+                'expectedPassword' => null,
+                'data' => [],
+            ],
+            'A password' => [
+                'expectedPassword' => 'superSecret',
+                'data' => ['password' => 'superSecret'],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider passwordScenarioProvider
+     * @covers \XIP\User\Infrastructure\Http\Request\UserRequest::getPassword
+     */
+    public function testGetPassword(?string $expectedPassword, array $data): void
+    {
+        // Setup
+        $this->mockGetCurrentRequest($data);
+
+        // Execute
+        $result = $this->userRequest->getPassword();
+
+        // Validate
+        $this->assertSame($expectedPassword, $result);
+    }
+
+    public function rolesScenarioProvider(): array
+    {
+        return [
+            'Default roles' => [
+                'expectedRoles' => [],
+                'data' => [],
+            ],
+            'Roles' => [
+                'expectedRoles' => [1, 2, 3],
+                'data' => ['roles' => ['1', '2', '3']],
+            ],
+        ];
+    }
+    
+    /**
+     * @dataProvider rolesScenarioProvider
+     * @covers \XIP\User\Infrastructure\Http\Request\UserRequest::getRoles
+     */
+    public function testGetRoles(array $expectedRoles, array $data): void
+    {
+        // Setup
+        $this->mockGetCurrentRequest($data);
+
+        // Execute
+        $result = $this->userRequest->getRoles();
+
+        // Validate
+        $this->assertSame($expectedRoles, $result);
+    }
+    
+    private function mockGetCurrentRequest(array $data): void
+    {
+        $request = new Request($data);
+        $this->requestStackMock->expects($this->once())
+            ->method('getCurrentRequest')
+            ->willReturn($request);
     }
 }
