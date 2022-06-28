@@ -4,83 +4,36 @@ declare(strict_types=1);
 
 namespace XIP\App\Infrastructure\Http\Web\Controller;
 
-use Symfony\Component\Validator\Exception\UnexpectedTypeException;
+use Symfony\Component\HttpFoundation\Response;
+use XIP\App\Infrastructure\Http\Web\Content\UsersWebContentFactory;
+use XIP\App\Infrastructure\Http\Web\Content\UserWebContentFactory;
 use XIP\Shared\Domain\Bus\CommandBusInterface;
-use XIP\Shared\Domain\Bus\QueryBusInterface;
+use XIP\Shared\Domain\Http\Response\ResponseFactoryInterface;
 use XIP\User\Application\Command\StoreUserCommand;
-use XIP\User\Application\Query\FindUserByEmailQuery;
-use XIP\User\Application\Query\FindUserQuery;
-use XIP\User\Application\Query\FindUsersQuery;
-use XIP\User\Application\Query\Result\UserExistsResult;
-use XIP\User\Application\Query\Result\UserResult;
-use XIP\User\Application\Query\Result\UsersResult;
-use XIP\User\Application\Query\UserExistsQuery;
 use XIP\User\Domain\DataTransferObject\User as UserDto;
 use XIP\User\Infrastructure\Http\Request\UserRequest;
 
 class UserController
 {
-    private QueryBusInterface $queryBus;
-
-    private CommandBusInterface $commandBus;
-
     public function __construct(
-        QueryBusInterface $queryBus,
-        CommandBusInterface $commandBus
+        private CommandBusInterface $commandBus,
+        private ResponseFactoryInterface $responseFactory
     ) {
-        $this->queryBus = $queryBus;
-        $this->commandBus = $commandBus;
     }
     
-    public function index(): void
+    public function index(UsersWebContentFactory $usersWebContentFactory): Response
     {
-        $usersResult = $this->queryBus->query(new FindUsersQuery());
-
-        if (!$usersResult instanceof UsersResult) {
-            throw new UnexpectedTypeException($usersResult, UsersResult::class);
-        }
-        
-        dd(
-            $usersResult->getUsers()
+        return $this->responseFactory->lastModifiedResponse(
+            static fn(): \DateTimeInterface => $usersWebContentFactory->getLastUpdatedAt(),
+            static fn(): string => $usersWebContentFactory->build()
         );
     }
 
-    public function show(int $userId): void
+    public function show(int $userId, UserWebContentFactory $userWebContentFactory): Response
     {
-        $userResult = $this->queryBus->query(new FindUserQuery($userId));
-
-        if (!$userResult instanceof UserResult) {
-            throw new UnexpectedTypeException($userResult, UserResult::class);
-        }
-
-        dd(
-            $userResult->getUser()
-        );
-    }
-    
-    public function email(string $email): void
-    {
-        $userResult = $this->queryBus->query(new FindUserByEmailQuery($email));
-
-        if (!$userResult instanceof UserResult) {
-            throw new UnexpectedTypeException($userResult, UserResult::class);
-        }
-
-        dd(
-            $userResult->getUser()
-        );
-    }
-    
-    public function exists(string $email): void
-    {
-        $userExistsResult = $this->queryBus->query(new UserExistsQuery($email));
-        
-        if (!$userExistsResult instanceof UserExistsResult) {
-            throw new UnexpectedTypeException($userExistsResult, UserExistsResult::class);
-        }
-        
-        dd(
-            $userExistsResult->exists()
+        return $this->responseFactory->lastModifiedResponse(
+            static fn(): \DateTimeInterface => $userWebContentFactory->getLastUpdatedAt($userId),
+            static fn(): string => $userWebContentFactory->build($userId)
         );
     }
     
@@ -95,10 +48,6 @@ class UserController
                     $userRequest->getRoles()
                 )
             )
-        );
-        
-        dd(
-            'User store prepared in queue.'
         );
     }
     

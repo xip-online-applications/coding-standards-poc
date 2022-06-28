@@ -15,6 +15,7 @@ class JwtAuthenticator extends AbstractAuthenticator
 {
     public function supports(Request $request): ?bool
     {
+        return false;
     }
 
     public function authenticate(Request $request): Passport

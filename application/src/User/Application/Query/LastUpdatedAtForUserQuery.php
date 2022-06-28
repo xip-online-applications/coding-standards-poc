@@ -6,15 +6,15 @@ namespace XIP\User\Application\Query;
 
 use XIP\Shared\Domain\Query\QueryInterface;
 
-class FindUserQuery implements QueryInterface
+class LastUpdatedAtForUserQuery implements QueryInterface
 {
     public function __construct(
-        private int $id
+        private int $userId
     ) {
     }
 
-    public function getId(): int
+    public function getUserId(): int
     {
-        return $this->id;
+        return $this->userId;
     }
 }
