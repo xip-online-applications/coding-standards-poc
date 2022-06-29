@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace XIP\App\Infrastructure\Http\Web\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
+use XIP\App\Infrastructure\Http\Content\UserContentFactory;
 use XIP\App\Infrastructure\Http\Web\Content\UsersWebContentFactory;
+use XIP\App\Infrastructure\Http\Web\Content\UserWebContent;
 use XIP\App\Infrastructure\Http\Web\Content\UserWebContentFactory;
 use XIP\Shared\Domain\Bus\CommandBusInterface;
 use XIP\Shared\Domain\Http\Response\ResponseFactoryInterface;
@@ -29,11 +31,11 @@ class UserController
         );
     }
 
-    public function show(int $userId, UserWebContentFactory $userWebContentFactory): Response
+    public function show(int $userId, UserContentFactory $userContentFactory, UserWebContent $userWebContent): Response
     {
         return $this->responseFactory->lastModifiedResponse(
-            static fn(): \DateTimeInterface => $userWebContentFactory->getLastUpdatedAt($userId),
-            static fn(): string => $userWebContentFactory->build($userId)
+            static fn(): \DateTimeInterface => $userContentFactory->getLastUpdatedAt($userId),
+            static fn(): string => $userContentFactory->setUserContent($userWebContent)->build($userId)
         );
     }
     
