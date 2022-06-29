@@ -13,9 +13,11 @@ class UsersWebContent extends AbstractTwigContent
     /**
      * @param User[] $users
      */
-    public function setUsers(array $users): void
+    public function setUsers(array $users): self
     {
         $this->users = $users;
+        
+        return $this;
     }
     
     protected function getTemplateName(): string

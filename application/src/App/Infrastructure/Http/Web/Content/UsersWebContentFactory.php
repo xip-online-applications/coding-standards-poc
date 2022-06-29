@@ -15,7 +15,7 @@ class UsersWebContentFactory
 {
     public function __construct(
         private QueryBusInterface $queryBus,
-        private UsersWebContent $usersTwigContent
+        private UsersWebContent $usersWebContent
     ) {
     }
 
@@ -38,8 +38,8 @@ class UsersWebContentFactory
             throw new UnexpectedTypeException($usersResult, UsersResult::class);
         }
 
-        $this->usersTwigContent->setUsers($usersResult->getUsers());
-
-        return $this->usersTwigContent->compose();
+        return $this->usersWebContent
+            ->setUsers($usersResult->getUsers())
+            ->compose();
     }
 }
