@@ -10,22 +10,11 @@ use XIP\User\Domain\Model\User;
 
 class UserWebContent extends AbstractTwigContent implements UserContentInterface
 {
-    private User $user;
-    
-    public function setUser(User $user): self
+    public function compose(User $user): string
     {
-        $this->user = $user;
-        
-        return $this;
-    }
-    
-    protected function getTemplateName(): string
-    {
-        return 'user.index';
-    }
-
-    protected function getTemplateData(): array
-    {
-        return ['user' => $this->user];
+        return $this->twig->render(
+            'user.show',
+            ['user' => $user]
+        );
     }
 }

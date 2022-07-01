@@ -1,32 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace XIP\App\Infrastructure\Http\Web\Content;
 
+use XIP\App\Domain\Content\UsersContentInterface;
 use XIP\Shared\Infrastructure\Http\Content\AbstractTwigContent;
 use XIP\User\Domain\Model\User;
 
-class UsersWebContent extends AbstractTwigContent
+class UsersWebContent extends AbstractTwigContent implements UsersContentInterface
 {
-    /** @var User[] */
-    private array $users;
-    
     /**
      * @param User[] $users
      */
-    public function setUsers(array $users): self
+    public function compose(array $users): string
     {
-        $this->users = $users;
-        
-        return $this;
-    }
-    
-    protected function getTemplateName(): string
-    {
-        return 'user.index';
-    }
-
-    protected function getTemplateData(): array
-    {
-        return ['users' => $this->users];
+        return $this->twig->render(
+            'user.index',
+            ['users' => $users]
+        );
     }
 }

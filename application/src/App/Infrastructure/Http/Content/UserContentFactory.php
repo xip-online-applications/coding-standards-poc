@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace XIP\App\Infrastructure\Http\Content;
 
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -12,18 +14,9 @@ use XIP\User\Application\Query\Result\UserResult;
 
 class UserContentFactory
 {
-    private UserContentInterface $userContent;
-    
     public function __construct(
         private QueryBusInterface $queryBus
     ) {
-    }
-    
-    public function setUserContent(UserContentInterface $userContent): self
-    {
-        $this->userContent = $userContent;
-        
-        return $this;
     }
     
     public function getLastUpdatedAt(int $userId): \DateTimeInterface
@@ -37,7 +30,7 @@ class UserContentFactory
         return $lastUpdatedAtResult->getLastUpdatedAt();
     }
     
-    public function build(int $userId): string
+    public function build(int $userId, UserContentInterface $userContent): string
     {
         $userResult = $this->queryBus->query(new FindUserQuery($userId));
 
@@ -45,8 +38,6 @@ class UserContentFactory
             throw new UnexpectedTypeException($userResult, UserResult::class);
         }
 
-        return $this->userContent
-            ->setUser($userResult->getUser())
-            ->compose();
+        return $userContent->compose($userResult->getUser());
     }
 }

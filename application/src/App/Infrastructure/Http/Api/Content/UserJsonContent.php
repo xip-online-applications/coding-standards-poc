@@ -9,22 +9,10 @@ use XIP\User\Domain\Model\User;
 
 class UserJsonContent implements UserContentInterface
 {
-    private User $user;
-    
-    public function setUser(User $user): self
-    {
-        $this->user = $user;
-        
-        return $this;
-    }
-
-    public function compose(): string
+    public function compose(User $user): string
     {
         return json_encode(
-            [
-                'id' => $this->user->getId(),
-                'name' => $this->user->getName(),
-            ]
+            UserSerializer::serialize($user)
         );
     }
 }

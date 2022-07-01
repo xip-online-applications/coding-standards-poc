@@ -6,9 +6,9 @@ namespace XIP\App\Infrastructure\Http\Web\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use XIP\App\Infrastructure\Http\Content\UserContentFactory;
-use XIP\App\Infrastructure\Http\Web\Content\UsersWebContentFactory;
+use XIP\App\Infrastructure\Http\Content\UsersContentFactory;
+use XIP\App\Infrastructure\Http\Web\Content\UsersWebContent;
 use XIP\App\Infrastructure\Http\Web\Content\UserWebContent;
-use XIP\App\Infrastructure\Http\Web\Content\UserWebContentFactory;
 use XIP\Shared\Domain\Bus\CommandBusInterface;
 use XIP\Shared\Domain\Http\Response\ResponseFactoryInterface;
 use XIP\User\Application\Command\StoreUserCommand;
@@ -23,11 +23,13 @@ class UserController
     ) {
     }
     
-    public function index(UsersWebContentFactory $usersWebContentFactory): Response
-    {
+    public function index(
+        UsersContentFactory $usersWebContentFactory,
+        UsersWebContent $usersWebContent
+    ): Response {
         return $this->responseFactory->lastModifiedResponse(
             static fn(): \DateTimeInterface => $usersWebContentFactory->getLastUpdatedAt(),
-            static fn(): string => $usersWebContentFactory->build()
+            static fn(): string => $usersWebContentFactory->build($usersWebContent)
         );
     }
 
@@ -35,7 +37,7 @@ class UserController
     {
         return $this->responseFactory->lastModifiedResponse(
             static fn(): \DateTimeInterface => $userContentFactory->getLastUpdatedAt($userId),
-            static fn(): string => $userContentFactory->setUserContent($userWebContent)->build($userId)
+            static fn(): string => $userContentFactory->build($userId, $userWebContent)
         );
     }
     
