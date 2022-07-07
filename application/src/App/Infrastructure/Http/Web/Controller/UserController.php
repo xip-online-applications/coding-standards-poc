@@ -7,13 +7,13 @@ namespace XIP\App\Infrastructure\Http\Web\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use XIP\App\Infrastructure\Http\Content\UserContentFactory;
 use XIP\App\Infrastructure\Http\Content\UsersContentFactory;
+use XIP\App\Infrastructure\Http\Request\UserRequest;
 use XIP\App\Infrastructure\Http\Web\Content\UsersWebContent;
 use XIP\App\Infrastructure\Http\Web\Content\UserWebContent;
 use XIP\Shared\Domain\Bus\CommandBusInterface;
 use XIP\Shared\Domain\Http\Response\ResponseFactoryInterface;
 use XIP\User\Application\Command\StoreUserCommand;
 use XIP\User\Domain\DataTransferObject\User as UserDto;
-use XIP\User\Infrastructure\Http\Request\UserRequest;
 
 class UserController
 {

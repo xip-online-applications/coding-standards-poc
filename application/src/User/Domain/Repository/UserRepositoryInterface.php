@@ -29,9 +29,9 @@ interface UserRepositoryInterface extends UserProviderInterface
     
     public function findOrFailByEmail(string $email): User;
     
-    public function findLastUpdatedAt(): \DateTimeImmutable;
+    public function findLastUpdatedAt(): \DateTimeInterface;
     
-    public function findLastUpdatedAtForUser(int $userId): \DateTimeImmutable;
+    public function findLastUpdatedAtForUser(int $userId): \DateTimeInterface;
     
     public function exists(string $email): bool;
     

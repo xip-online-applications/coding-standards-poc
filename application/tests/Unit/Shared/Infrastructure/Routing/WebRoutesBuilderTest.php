@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace XIP\Tests\Unit\Shared\Infrastructure\Routing;
 
-use XIP\Shared\Domain\Http\Routing\WebRoutesBuilderInterface;
-use XIP\Shared\Infrastructure\Http\Routing\WebRoutesBuilder;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+use XIP\App\Infrastructure\Http\Web\Routing\WebRoutesBuilder;
+use XIP\Shared\Domain\Http\Routing\WebRoutesBuilderInterface;
 
 /**
- * @covers \XIP\Shared\Infrastructure\Http\Routing\WebRoutesBuilder
+ * @covers \XIP\App\Infrastructure\Http\Web\Routing\WebRoutesBuilder
  */
 class WebRoutesBuilderTest extends TestCase
 {

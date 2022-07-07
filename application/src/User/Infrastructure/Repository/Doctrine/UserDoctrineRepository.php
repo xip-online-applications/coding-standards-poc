@@ -114,6 +114,41 @@ class UserDoctrineRepository implements UserRepositoryInterface
         return null === $user;
     }
 
+    public function findLastUpdatedAt(): \DateTimeInterface
+    {
+        $queryBuilder = $this->userEntityRepository->createQueryBuilder('u')
+            ->select('updated_at')
+            ->orderBy('updated_at', 'DESC')
+            ->setMaxResults(1);
+
+
+        $lastUpdatedAtResult = $queryBuilder->execute()->fetchAssociative();
+
+        if (false === $lastUpdatedAtResult) {
+            return new \DateTimeImmutable();
+        }
+
+        return new \DateTimeImmutable($lastUpdatedAtResult['updated_at']);
+    }
+
+    public function findLastUpdatedAtForUser(int $userId): \DateTimeInterface
+    {
+        $queryBuilder = $this->userEntityRepository->createQueryBuilder('u')
+            ->select('updated_at')
+            ->where('id', ':id')
+            ->orderBy('updated_at', 'DESC')
+            ->setParameter('id', $userId)
+            ->setMaxResults(1);
+
+        $lastUpdatedAtResult = $queryBuilder->execute()->fetchAssociative();
+
+        if (false === $lastUpdatedAtResult) {
+            return new \DateTimeImmutable();
+        }
+
+        return new \DateTimeImmutable($lastUpdatedAtResult['updated_at']);
+    }
+
     public function store(UserDto $userDto): User
     {
         $userEntity = $this->userEntityRepository->create();

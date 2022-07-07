@@ -115,6 +115,39 @@ class UserDatabaseRepository extends AbstractDatabaseRepository implements UserR
          return $user;
     }
 
+    public function findLastUpdatedAt(): \DateTimeInterface
+    {
+        $lastUpdatedInfo = $this->createSelect([sprintf('%s.%s', UserTable::NAME, UserTable::COLUMN_UPDATED_AT)])
+            ->orderBy(sprintf('%s.%s', UserTable::NAME, UserTable::COLUMN_UPDATED_AT), 'desc')
+            ->fetchOne();
+        
+        if (false === $lastUpdatedInfo) {
+            return new \DateTimeImmutable();
+        }
+        
+        return \DateTimeImmutable::createFromFormat(
+            $this->databaseDateTimeFormat,
+            $lastUpdatedInfo[UserTable::COLUMN_UPDATED_AT]
+        );
+    }
+
+    public function findLastUpdatedAtForUser(int $userId): \DateTimeInterface
+    {
+        $lastUpdatedInfo = $this->createSelect([sprintf('%s.%s', UserTable::NAME, UserTable::COLUMN_UPDATED_AT)])
+            ->where(sprintf('%s.%s = :userId', UserTable::NAME, UserTable::COLUMN_ID))
+            ->setParameter('userId', $userId)
+            ->fetchOne();
+
+        if (false === $lastUpdatedInfo) {
+            return new \DateTimeImmutable();
+        }
+
+        return \DateTimeImmutable::createFromFormat(
+            $this->databaseDateTimeFormat,
+            $lastUpdatedInfo[UserTable::COLUMN_UPDATED_AT]
+        );
+    }
+
     public function exists(string $email): bool
     {
         $count = $this->createSelect([sprintf('count(%s.%s)', UserTable::NAME, UserTable::COLUMN_ID)])

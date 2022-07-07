@@ -39,6 +39,8 @@ services:
     XIP\Shared\Domain\Bus\CommandBusInterface: '@XIP\Shared\Application\Bus\CommandBus'
     XIP\Shared\Domain\Bus\EventBusInterface: '@XIP\Shared\Application\Bus\EventBus'
 
+    XIP\Shared\Domain\Http\Response\ResponseFactoryInterface: '@XIP\Shared\Infrastructure\Http\Response\ResponseFactory'
+
     XIP\App\Application\EventListeners\ConstraintViolationExceptionListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace XIP\User\Infrastructure\Http\Request;
+namespace XIP\App\Infrastructure\Http\Request;
 
 use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\Email;

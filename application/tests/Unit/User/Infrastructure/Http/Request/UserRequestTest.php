@@ -15,13 +15,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use XIP\App\Infrastructure\Http\Request\UserRequest;
 use XIP\Shared\Infrastructure\Http\Request\AbstractRequest;
 use XIP\User\Application\Validator\Constraint\EmailUnique;
 use XIP\User\Application\Validator\Constraint\RolesExist;
-use XIP\User\Infrastructure\Http\Request\UserRequest;
 
 /**
- * @covers \XIP\User\Infrastructure\Http\Request\UserRequest
+ * @covers \XIP\App\Infrastructure\Http\Request\UserRequest
  */
 class UserRequestTest extends TestCase
 {
@@ -39,7 +39,7 @@ class UserRequestTest extends TestCase
     }
 
     /**
-     * @covers \XIP\User\Infrastructure\Http\Request\UserRequest
+     * @covers \XIP\App\Infrastructure\Http\Request\UserRequest
      */
     public function testInstance(): void
     {
