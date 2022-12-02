@@ -1,6 +1,8 @@
 XIP Coding standards
 =========================
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=master&repo=447977202)
+
 ## Documentation
 You can find more extended documentation over here:
 - [routes](./docs/routes.md)
