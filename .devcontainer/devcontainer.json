@@ -8,7 +8,11 @@
     "remoteUser": "www-data",
 	"workspaceFolder": "/var/www",
     "settings": {
-        "terminal.integrated.defaultProfile.linux": "bash"
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.cwd": "/var/www/application",
+        "symfony-vscode.phpExecutablePath": "/usr/local/bin/php",
+        "php.validate.executablePath": "/usr/local/bin/php",
+        "php.debug.executablePath": "/usr/local/bin/php"
     },
 	"customizations": {
 		"vscode": {
