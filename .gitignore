@@ -28,7 +28,8 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
 /.idea/
-docker-compose.env
+*.env
+!.docker-compose.env.dist
 /tools/
 .phive
 /cov/
@@ -36,3 +37,4 @@ docker-compose.env
 docker-compose.override.yml
 /var/public.key
 /var/private.key
+storage/

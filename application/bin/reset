@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Enable TTY, so fastest runs on a single line and looks cooler
+exec < /dev/tty
+
+SYMFONY_ENV="${1#*=}"
+
+composer install --no-interaction
+
+## use reset command for the rest. This command resets both dev and test
+#if [[ $SYMFONY_ENV ]]
+#then
+#    bin/console thor:reset --env=$SYMFONY_ENV -n
+#else
+#    bin/console thor:reset --env=test -n
+#    bin/console thor:reset --env=dev -n
+#fi
+
+echo "Done"

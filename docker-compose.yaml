@@ -1,63 +1,64 @@
 version: '3.7'
 services:
-  nginx:
-    build: ./operations/docker/nginx
-    ports:
-      - 80:80
-    volumes:
-      - ./application:/var/www/application:cached
-    links:
-      - php
-    networks:
-      - xip-network
+    nginx:
+        build: .operations/docker/nginx
+        ports:
+            - '80:80'
+        volumes:
+            - ./application:/var/www/application:cached
+        links:
+            - php
+        networks:
+            - xip-network
 
-  php:
-    build:
-      context: ./operations/docker/php
-      args:
-        - PUID=1000
-        - LIVE=
-    expose:
-      - '9000'
-      - '9001'
-    volumes:
-      - ./application:/var/www/application:cached
-      - ./application/var/coverage:/opt/phpstorm-coverage:cached
-    env_file:
-      - docker-compose.env
-    extra_hosts:
-      - 'docker.host:127.0.0.1'
-    networks:
-      - xip-network
+    php:
+        build:
+            context: application
+            target: base
+        expose:
+            - '9000'
+            - '9003'
+        volumes:
+            - ./application:/var/www/application:cached
+            - ./application/var/coverage:/opt/phpstorm-coverage:cached
+        env_file:
+            - .docker-compose.env
+        extra_hosts:
+            - 'docker.host:127.0.0.1'
+        networks:
+            - xip-network
 
-  database:
-    container_name: database
-    image: mariadb:10.7.1
-    environment:
-      MYSQL_ROOT_PASSWORD: superSecret
-      MYSQL_DATABASE: xip
-      MYSQL_USER: xip
-      MYSQL_PASSWORD: superSecretOne
-    ports:
-      - 3306:3306
-    volumes:
-      - ./storage/database:/var/lib/mysql:cached
-    networks:
-      - xip-network
+    database:
+        build: .operations/docker/database
+        environment:
+            MYSQL_ROOT_PASSWORD: superSecret
+            MYSQL_DATABASE: xip
+            MYSQL_USER: xip
+            MYSQL_PASSWORD: superSecretOne
+        ports:
+            - 3306:3306
+        volumes:
+            - database-data:/var/lib/mysql:cached
+        networks:
+            - xip-network
 
-  rabbitmq:
-    container_name: rabbitmq
-    image: rabbitmq:3.9.13-management
-    ports:
-      - 5672:5672
-      - 15672:15672
-    volumes:
-      - ./storage/rabbitmq/data:/var/lib/rabbitmq:cached
-      - ./storage/rabbitmq/log:/var/log/rabbitmq:cached
-    networks:
-      - xip-network
+    rabbitmq:
+        build: .operations/docker/rabbitmq
+        ports:
+            - 5672:5672
+            - 15672:15672
+        volumes:
+            - rabbitmq-data:/var/lib/rabbitmq:cached
+            - rabbitmq-data:/var/log/rabbitmq:cached
+        networks:
+            - xip-network
 
 networks:
-  xip-network:
-    name: xip-network
-    driver: bridge
+    xip-network:
+        name: xip-network
+
+volumes:
+    database-data:
+        driver: local
+    rabbitmq-data:
+        driver: local

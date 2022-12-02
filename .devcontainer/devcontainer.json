@@ -1,0 +1,55 @@
+{
+	"name": "XIP Coding Standads PoC",
+	"dockerComposeFile": [
+        "../docker-compose.yaml",
+        "docker-compose.dev.yaml"
+    ],
+	"service": "php",
+    "remoteUser": "www-data",
+	"workspaceFolder": "/var/www",
+    "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+    },
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-vscode-remote.remote-containers",
+				"ms-vscode.makefile-tools",
+				"bmewburn.vscode-intelephense-client",
+				"xdebug.php-debug",
+				"TheNouillet.symfony-vscode",
+				"ms-azuretools.vscode-docker"
+			]
+		}
+	},
+	"initializeCommand": "make prepare && make build",
+	"updateContentCommand": "cd application && bin/reset",
+	"forwardPorts": [
+		80,
+		9003,
+        6379,
+		27017
+	],
+	"portsAttributes": {
+		"80": {
+			"label": "App",
+			"onAutoForward": "notify"
+		},
+		"9003": {
+			"label": "xDebug",
+			"onAutoForward": "silent"
+		},
+		"3306": {
+			"label": "MySQL",
+			"onAutoForward": "silent"
+		},
+		"5672": {
+			"label": "RabbitMQ",
+			"onAutoForward": "silent"
+		},
+		"15672": {
+			"label": "RabbitMQ Management",
+			"onAutoForward": "silent"
+		}
+	}
+}

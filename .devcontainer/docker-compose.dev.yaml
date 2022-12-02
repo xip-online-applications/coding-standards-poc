@@ -1,0 +1,7 @@
+version: '3.7'
+services:
+    php:
+        cap_add:
+            - SYS_PTRACE
+        security_opt:
+            - seccomp:unconfined
