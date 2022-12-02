@@ -6,8 +6,6 @@ namespace XIP\User\Infrastructure\Repository\Database;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
-use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use XIP\Shared\Domain\Exception\ModelNotFoundException;
 use XIP\Shared\Infrastructure\Repository\AbstractDatabaseRepository;

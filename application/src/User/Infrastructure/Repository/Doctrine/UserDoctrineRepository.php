@@ -7,8 +7,6 @@ namespace XIP\User\Infrastructure\Repository\Doctrine;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use XIP\Shared\Domain\Exception\ModelNotFoundException;
 use XIP\User\Domain\DataTransferObject\User as UserDto;
