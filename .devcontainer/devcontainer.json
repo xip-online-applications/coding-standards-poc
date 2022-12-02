@@ -20,9 +20,10 @@
 				"ms-vscode-remote.remote-containers",
 				"ms-vscode.makefile-tools",
 				"bmewburn.vscode-intelephense-client",
-				"xdebug.php-debug",
+				"xdebug.php-pack",
 				"TheNouillet.symfony-vscode",
-				"ms-azuretools.vscode-docker"
+				"ms-azuretools.vscode-docker",
+				"valeryanm.vscode-phpsab"
 			]
 		}
 	},
