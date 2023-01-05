@@ -1,8 +1,6 @@
-FROM xiponlineapplications/php-extra-prod:8.1 as prod
-
 FROM php
 
-COPY --from=prod /opt /opt
+COPY --from=ghcr.io/xip-online-applications/php-docker-containers/php-extra-prod /opt /opt
 
 ARG COMPOSER_AUTH=""
 RUN bash -c "COMPOSER_AUTH='$COMPOSER_AUTH' composer install --no-dev --optimize-autoloader --no-interaction --no-scripts"

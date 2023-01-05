@@ -1,18 +1,11 @@
-FROM xiponlineapplications/php-extra-composer:8.1 as composer
-FROM xiponlineapplications/php-extra-opcache:8.1 as opcache
-FROM xiponlineapplications/php-extra-mysql:8.1 as mysql
-FROM xiponlineapplications/php-extra-redis:8.1 as redis
-FROM xiponlineapplications/php-extra-amqp:8.1 as amqp
-FROM xiponlineapplications/php-extra-dev:8.1 as dev
+FROM ghcr.io/xip-online-applications/php-docker-containers/php:8.1-fpm AS base
 
-FROM xiponlineapplications/php:8.1.4-fpm AS base
-
-COPY --from=composer /opt /opt
-COPY --from=opcache /opt /opt
-COPY --from=mysql /opt /opt
-COPY --from=redis /opt /opt
-COPY --from=amqp /opt /opt
-COPY --from=dev /opt /opt
+COPY --from=ghcr.io/xip-online-applications/php-docker-containers/php-extra-composer:8.1 /opt /opt
+COPY --from=ghcr.io/xip-online-applications/php-docker-containers/php-extra-opcache:8.1 /opt /opt
+COPY --from=ghcr.io/xip-online-applications/php-docker-containers/php-extra-mysql:8.1 /opt /opt
+COPY --from=ghcr.io/xip-online-applications/php-docker-containers/php-extra-redis:8.1 /opt /opt
+COPY --from=ghcr.io/xip-online-applications/php-docker-containers/php-extra-amqp:8.1 /opt /opt
+COPY --from=ghcr.io/xip-online-applications/php-docker-containers/php-extra-dev:8.1 /opt /opt
 
 FROM base AS build
 
