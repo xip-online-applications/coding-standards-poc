@@ -7,6 +7,8 @@ PHP ?= $(DOCKER_COMPOSE) exec php
 
 prepare:
 	cp .docker-compose.env.dist .docker-compose.env
+	touch application/var
+	chmod 777 -R application/var
 
 build:
 	$(DOCKER_COMPOSE) pull

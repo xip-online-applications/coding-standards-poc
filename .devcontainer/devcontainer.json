@@ -16,7 +16,7 @@
 	"onCreateCommand": "make prepare",
 
 	// Run reset after content has changed
-	// "updateContentCommand": "make reset",
+	 "updateContentCommand": "make reset",
 
 	// Start Docker Compose!
 	"postStartCommand": "make start",
@@ -29,5 +29,16 @@
 		3306,
 		5672,
 		15672
-	]
+	],
+    "portsAttributes": {
+        "80": {
+            "label": "App",
+            "onAutoForward": "notify"
+        },
+        "9003": {
+            "label": "xDebug",
+            "onAutoForward": "silent"
+        }
+    },
+    "otherPortsAttributes": {"onAutoForward": "silent"}
 }
