@@ -1,0 +1,33 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/universal
+{
+	"name": "XIP coding standards POC",
+	"build": {
+        "dockerfile": "Dockerfile"
+    },
+
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
+		"ghcr.io/devcontainers/features/github-cli:1": {},
+		"ghcr.io/devcontainers/features/sshd:1": {}
+	},
+
+	// Build the container after creation
+	"onCreateCommand": "make prepare",
+
+	// Run reset after content has changed
+	// "updateContentCommand": "make reset",
+
+	// Start Docker Compose!
+	"postStartCommand": "make start",
+
+	// Configure forwarded ports
+	"forwardPorts": [
+		80,
+		9003,
+        6379,
+		3306,
+		5672,
+		15672
+	]
+}
