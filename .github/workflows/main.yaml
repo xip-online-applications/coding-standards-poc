@@ -5,8 +5,11 @@ on:
     branches: ['main']
 
 jobs:
-  unit:
+  checks:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        command: ['unit', 'qa']
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -19,7 +22,5 @@ jobs:
       - name: Start the containers
         run: make start
       
-      - name: Run the unit tests
-        run: make unit
-      - name: Run code analysis
-        run: make qa
+      - name: Run ${{ matrix.command }}
+        run: make ${{ matrix.command }}
