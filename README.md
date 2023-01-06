@@ -1,6 +1,7 @@
 XIP Coding standards
 =========================
 
+[![Code checks & build](https://github.com/xip-online-applications/coding-standards-poc/actions/workflows/main.yaml/badge.svg)](https://github.com/xip-online-applications/coding-standards-poc/actions/workflows/main.yaml)
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=master&repo=447977202)
 
 ## Documentation
