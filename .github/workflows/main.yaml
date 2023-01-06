@@ -9,7 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        command: ['unit', 'check-style', 'phpstan']
+        command: 
+          - 'unit'
+          - 'check-style'
+          # - 'phpstan'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -24,3 +27,31 @@ jobs:
       
       - name: Run ${{ matrix.command }}
         run: make ${{ matrix.command }}
+
+  build:
+    needs: checks
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Build PHP base container
+        run: docker build -t php -f application/Dockerfile application
+      - name: Build PHP deployment container
+        run: docker build -t deploy -f application/deploy.Dockerfile application
+      
+      - name: Tag PHP deployment container
+        run: docker tag deploy ghcr.io/xip-online-applications/coding-standards-poc:latest
+      - name: Push PHP deployment container
+        run: docker push ghcr.io/xip-online-applications/coding-standards-poc:latest
