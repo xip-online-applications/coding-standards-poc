@@ -28,11 +28,11 @@
         "symfony/yaml": "6.0.*"
     },
     "require-dev": {
+        "phpstan/phpstan": "^1.9",
         "phpunit/phpunit": "^9.5",
         "squizlabs/php_codesniffer": "^3.6",
         "symfony/stopwatch": "6.0.*",
-        "symfony/web-profiler-bundle": "6.0.*",
-        "vimeo/psalm": "^4.20"
+        "symfony/web-profiler-bundle": "6.0.*"
     },
     "config": {
         "allow-plugins": {
@@ -79,7 +79,8 @@
         ],
         "check-style": "phpcbf -p -n --standard=phpcs.xml.dist --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests",
         "fix-style": "phpcbf -p --standard=phpcs.xml.dist --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1  src tests",
-        "qa": "@check-style",
+        "phpstan": "phpstan analyse --xdebug -c phpstan.neon",
+        "qa": ["@check-style", "@phpstan"],
         "unit": "phpunit -c phpunit.xml.dist --coverage-clover=var/coverage.xml --colors=always"
     },
     "conflict": {

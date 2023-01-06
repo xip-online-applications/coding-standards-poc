@@ -40,6 +40,12 @@ reset:
 qa:
 	$(PHP) composer qa
 
+check-style:
+	$(PHP) composer check-style
+
+phpstan:
+	$(PHP) composer phpstan
+
 unit:
 	$(PHP) composer unit
 

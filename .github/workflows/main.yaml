@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        command: ['unit', 'qa']
+        command: ['unit', 'check-style', 'phpstan']
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
