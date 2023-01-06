@@ -15,3 +15,5 @@ ARG COMPOSER_AUTH=""
 RUN bash -c "COMPOSER_AUTH='$COMPOSER_AUTH' composer install --optimize-autoloader --no-interaction --no-scripts"
 
 COPY --chown=www-data:www-data ./ ./
+
+RUN bin/console cache:warmup

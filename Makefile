@@ -10,6 +10,9 @@ prepare:
 	mkdir -p application/var
 	chmod 777 -R application/var
 
+prepare-gha: prepare
+	cp docker-compose.gha.yaml docker-compose.override.yaml
+
 build:
 	$(DOCKER_COMPOSE) pull
 	$(DOCKER_COMPOSE) build
@@ -21,8 +24,8 @@ stop:
 	$(DOCKER_COMPOSE) down
 
 restart:
-	make stop
-	make start
+	$(MAKE) stop
+	$(MAKE) start
 
 status:
 	$(DOCKER_COMPOSE) ps
@@ -34,14 +37,14 @@ bash:
 	$(PHP) bash
 
 reset:
-	make build
+	$(MAKE) build
 	$(DOCKER_COMPOSE) run php bin/reset
 
 qa:
 	$(PHP) composer qa
 
 unit:
-	$(PHP) vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover=coverage.xml --colors=always
+	$(PHP) composer unit
 
 cc:
 	$(PHP) bin/console cache:clear

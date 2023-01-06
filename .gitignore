@@ -35,6 +35,7 @@ yarn-error.log
 /cov/
 **/.DS_Store
 docker-compose.override.yml
+docker-compose.override.yaml
 /var/public.key
 /var/private.key
 storage/

@@ -23,8 +23,6 @@ services:
             - ./application/var/coverage:/opt/phpstorm-coverage:cached
         env_file:
             - .docker-compose.env
-        extra_hosts:
-            - 'docker.host:127.0.0.1'
         networks:
             - xip-network
 
