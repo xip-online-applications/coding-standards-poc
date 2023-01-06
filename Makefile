@@ -7,11 +7,8 @@ PHP ?= $(DOCKER_COMPOSE) exec php
 
 prepare:
 	cp .docker-compose.env.dist .docker-compose.env
-	mkdir -p application/var
-	chmod 777 -R application/var
-
-prepare-gha: prepare
-	cp docker-compose.gha.yaml docker-compose.override.yaml
+	mkdir -p application/var application/vendor
+	chmod 777 -R application/var application/vendor
 
 build:
 	$(DOCKER_COMPOSE) pull

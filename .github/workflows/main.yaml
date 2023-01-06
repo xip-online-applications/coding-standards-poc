@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Prepare everything
-        run: make prepare-gha
+        run: make prepare
       - name: Run reset of the app
         run: make reset
 
