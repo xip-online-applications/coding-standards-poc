@@ -1,0 +1,21 @@
+name: Build the latest containes.
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Prepare everything
+        run: make prepare && make reset
+
+      - name: Start the containers
+        run: make start
+      
+      - name: Run the unit tests
+        run: make unit
