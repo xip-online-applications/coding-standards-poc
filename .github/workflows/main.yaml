@@ -51,7 +51,9 @@ jobs:
       - name: Build PHP deployment container
         run: docker build -t deploy -f application/deploy.Dockerfile application
       
-      - name: Tag PHP deployment container
+      - name: Tag PHP deployment container with commit hash
+        run: docker tag deploy ghcr.io/xip-online-applications/coding-standards-poc:${{ github.sha }}
+      - name: Tag PHP deployment container with latest
         run: docker tag deploy ghcr.io/xip-online-applications/coding-standards-poc:latest
       - name: Push PHP deployment container
-        run: docker push ghcr.io/xip-online-applications/coding-standards-poc:latest
+        run: docker push -a ghcr.io/xip-online-applications/coding-standards-poc
