@@ -1,4 +1,4 @@
-FROM ghcr.io/xip-online-applications/php-docker-containers/php:8.1-fpm AS base
+FROM ghcr.io/xip-online-applications/php-docker-containers/php:8.2-fpm AS base
 
 COPY --from=ghcr.io/xip-online-applications/php-docker-containers/php-extra-composer:8.1 /opt /opt
 COPY --from=ghcr.io/xip-online-applications/php-docker-containers/php-extra-opcache:8.1 /opt /opt
